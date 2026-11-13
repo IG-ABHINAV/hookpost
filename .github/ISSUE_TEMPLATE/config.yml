@@ -1,7 +1,10 @@
-# Disable the default option to open a blank issue
+# Blank issues stay allowed; the bug and feature forms are the preferred way in.
 blank_issues_enabled: true
 
 contact_links:
+  - name: Questions, setup help and Google Summer of Code ideas
+    url: https://github.com/hookstep/hookpost/discussions
+    about: Ask in GitHub Discussions. Issues are for bugs and agreed work.
   - name: Security Issue
     url: https://github.com/hookstep/hookpost/security/advisories/new
     about: Please report security issues privately through GitHub Security Advisories.
