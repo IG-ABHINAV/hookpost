@@ -1,0 +1,104 @@
+<!--
+  Source for apps/frontend/public/og-image.png (1200x630).
+
+  Regenerate (with every other brand asset, in the active brand theme):
+    pnpm brand:assets
+  Colours are the --hp-* tokens of the active theme
+  (libraries/helpers/src/brand/brand-themes.ts); the generator injects them
+  before rendering, so there is no hex to edit here. Opened directly, the
+  fallbacks below show Tidewire.
+
+  Deliberately uses system fonts only. The previous og-image was generated with
+  emoji in the chips and three of them rendered as tofu boxes in the shipped PNG,
+  because whatever produced it had no emoji font. No emoji here, no web fonts, no
+  network fetch at render time.
+
+  Copy rules learned the hard way - keep them:
+  - No competitor names. The old image read "the modern, open-source Postiz &
+    Buffer alternative", which tells Buffer's own audience we are the knock-off.
+    Commit 4c4a826d scrubbed the same framing off the compare pages.
+  - No unsupportable superlatives. The old badge said "#1 OPEN SOURCE
+    ALTERNATIVE".
+  - NO NETWORK COUNT. This asset carried "30 networks" and was wrong within
+    hours, because the connectable count is 32 registered providers MINUS
+    whatever HIDDEN_PROVIDERS hides - and that is a server env var, not
+    something readable from the repo. channel-specs.ts, whose stated invariant
+    is "only channels a signed-up user can actually connect appear here",
+    lists 18. The site said 30 and was being corrected to 20 at the same time.
+    A static share image must not carry a number that lives in an env var and
+    drifts. Say what is true at any count.
+  - NO FREE PLAN. A chip here said "Free forever tier" after the Free plan was
+    gone; since 28 Oct 2026 new workspaces get FREE_POST_LIMIT free posts with
+    no card (trial.policy.ts) and no trial. check-free-claims.js reads built
+    pages and cannot read this PNG, so check-free-claims.spec.ts reads this file
+    instead: it fails on free-plan, open-source or self-host wording, on any
+    "N-day trial", and on an "N free posts" chip that is not FREE_POST_LIMIT.
+    Change FREE_POST_LIMIT and that spec tells you to regenerate the image.
+-->
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root {
+    --hp-bg:#061416; --hp-text:#E7F5F3; --hp-text-2:#A3BDBA; --hp-border-strong:#2C4F53;
+    --hp-primary:#2EE6CF; --hp-primary-rgb:46 230 207; --hp-primary-text:#2EE6CF;
+    --hp-accent-rgb:255 154 92; --hp-text-rgb:231 245 243;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:630px; }
+  body {
+    background:var(--hp-bg);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:var(--hp-text); overflow:hidden; position:relative;
+  }
+  /* ambient glows: the brand colour, and the accent opposite it */
+  .glow { position:absolute; border-radius:50%; filter:blur(90px); }
+  .g1 { width:620px; height:620px; left:-190px; top:-230px; background:rgb(var(--hp-primary-rgb) / .20); }
+  .g2 { width:560px; height:560px; right:-170px; bottom:-250px; background:rgb(var(--hp-accent-rgb) / .14); }
+  .g3 { width:420px; height:420px; left:44%; top:38%; background:rgb(var(--hp-primary-rgb) / .08); }
+
+  .card {
+    position:absolute; inset:38px;
+    border:1px solid rgb(var(--hp-text-rgb) / .10);
+    border-radius:26px;
+    padding:56px 60px;
+    display:flex; flex-direction:column;
+  }
+  .badge {
+    align-self:flex-start; display:flex; align-items:center; gap:11px;
+    border:1px solid rgb(var(--hp-primary-rgb) / .42);
+    background:rgb(var(--hp-primary-rgb) / .09);
+    border-radius:999px; padding:11px 22px;
+    font-size:16px; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--hp-text);
+  }
+  .dot { width:9px; height:9px; border-radius:50%; background:var(--hp-primary); }
+
+  .word { margin-top:34px; font-size:92px; font-weight:800; letter-spacing:-.035em; line-height:.98; }
+  .word i { font-style:normal; color:var(--hp-primary-text); }
+
+  h2 { margin-top:16px; font-size:41px; font-weight:700; letter-spacing:-.022em; color:var(--hp-text); }
+  p  { margin-top:18px; font-size:22px; line-height:1.5; color:var(--hp-text-2); max-width:52ch; font-weight:400; }
+
+  .chips { margin-top:40px; display:flex; gap:12px; flex-wrap:nowrap; }
+  .chip {
+    border:1px solid var(--hp-border-strong);
+    background:rgb(var(--hp-text-rgb) / .045);
+    border-radius:999px; padding:13px 21px;
+    font-size:18px; font-weight:600; color:var(--hp-text); white-space:nowrap;
+  }
+  .url { margin-top:auto; padding-top:30px; font-size:21px; font-weight:600; color:var(--hp-primary-text); letter-spacing:-.01em; }
+</style>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+<div class="card">
+  <div class="badge"><span class="dot"></span>MCP-native &middot; UPI billing</div>
+  <div class="word">Hook<i>post</i></div>
+  <h2>Social scheduling with an AI agent</h2>
+  <p>Every network you post to, from one visual calendar, with AI drafting &mdash; plus an MCP server, so Claude can publish for you.</p>
+  <div class="chips">
+    <div class="chip">One calendar</div>
+    <div class="chip">AI content agent</div>
+    <div class="chip">3 free posts</div>
+    <div class="chip">Flat pricing</div>
+  </div>
+  <div class="url">hookpost.hookstep.in</div>
+</div>

@@ -1,0 +1,162 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hookpost gateway probe (private)",
+    "version": "1.0.0",
+    "description": "For the seller only, on a private plan: reports which headers api.market forwards, as names, flags and hash prefixes. Import it as its own Source with the base URL of the product being checked.",
+    "contact": {
+      "name": "Hookstep support",
+      "email": "support@hookstep.in",
+      "url": "https://hookpost.hookstep.in"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://hookpost.hookstep.in/api/mkt/v1/social"
+    }
+  ],
+  "paths": {
+    "/_probe": {
+      "get": {
+        "operationId": "probeGet",
+        "summary": "What the gateway forwards",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "201 to answer 201 (is a 201 billed?).",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                200,
+                201
+              ]
+            }
+          },
+          {
+            "name": "bill",
+            "in": "query",
+            "required": false,
+            "description": "Credits to report in X-Magicapi-Billing.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The report.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The report, as a 201.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "probePost",
+        "summary": "What the gateway forwards (POST)",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "201 to answer 201.",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                200,
+                201
+              ]
+            }
+          },
+          {
+            "name": "bill",
+            "in": "query",
+            "required": false,
+            "description": "Credits to report in X-Magicapi-Billing.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The report.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The report, as a 201.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

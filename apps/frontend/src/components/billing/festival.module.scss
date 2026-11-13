@@ -1,0 +1,391 @@
+// The festival theme (holiday.offer.ts): announcement bar, hero pill, hero
+// glow and plan-card badge. A festival is two colours, set as CSS variables
+// from its theme (--f-accent, --f-glow); everything else is shared, so no
+// festival can look cheaper than another. The only motion is the hero glow's
+// slow drift: transform only, one layer, off under prefers-reduced-motion.
+
+// Brand and surface come from the site's tokens, never hex here, so a
+// rebrand only changes tokens: --pink on the marketing pages
+// (landing-global.scss), --new-btn-primary in the app (colors.scss).
+.banner,
+.pill,
+.heroGlow,
+.festiveCard {
+  --f-brand: var(--pink, var(--new-btn-primary));
+  // The bar and badge surface: the page's black, lifted a touch.
+  --f-surface: color-mix(in srgb, #fff 2.5%, #000);
+}
+
+// The festival's colour as a small lit dot (bar, pill, badge).
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--f-accent);
+  box-shadow:
+    0 0 6px color-mix(in srgb, var(--f-accent) 80%, transparent),
+    0 0 14px color-mix(in srgb, var(--f-glow) 60%, transparent);
+}
+
+// ------------------------------------------------------- announcement bar
+
+.banner {
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background:
+    radial-gradient(
+      36% 220% at 50% 0%,
+      color-mix(in srgb, var(--f-glow) 14%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--f-surface);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  // A hairline of the festival's colour, brightest in the middle.
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent 8%,
+      color-mix(in srgb, var(--f-accent) 55%, transparent) 50%,
+      transparent 92%
+    );
+  }
+}
+
+.bannerRow {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1280px;
+  min-height: 52px;
+  padding: 8px 48px 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  @media (min-width: 768px) {
+    min-height: 44px;
+    padding: 6px 56px;
+    justify-content: center;
+  }
+}
+
+.copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  @media (min-width: 768px) {
+    flex: 0 1 auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+}
+
+.headline {
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: -0.003em;
+  color: rgba(255, 255, 255, 0.6);
+
+  @media (min-width: 768px) {
+    font-size: 13.5px;
+  }
+}
+
+.name {
+  font-weight: 600;
+  color: #fff;
+
+  // Phones drop the pitch; "Winter offer: $7/month" still reads as a line.
+  @media (max-width: 767px) {
+    &::after {
+      content: ':';
+    }
+  }
+}
+
+.pitch {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.price {
+  font-weight: 600;
+  color: var(--f-accent);
+  white-space: nowrap;
+}
+
+.countdown {
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.45);
+
+  @media (min-width: 768px) {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+
+    // A short rule between the offer and the time left.
+    &::before {
+      content: '';
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+  }
+}
+
+.cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 9px 0 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--f-accent) 45%, transparent);
+  }
+
+  &:hover .chevron {
+    transform: translateX(2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--f-accent);
+    outline-offset: 2px;
+  }
+}
+
+.chevron {
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+
+.close {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.45);
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--f-accent);
+    outline-offset: 1px;
+  }
+}
+
+// The in-app Plans screen: a rounded card, no close button.
+.inApp {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  .bannerRow {
+    padding: 10px 16px;
+  }
+}
+
+// ------------------------------------------------------------- hero pill
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 12px 0 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.6);
+  // A 1px border that runs from the festival's colour into the brand colour.
+  background:
+    linear-gradient(var(--f-surface), var(--f-surface)) padding-box,
+    linear-gradient(
+        100deg,
+        color-mix(in srgb, var(--f-accent) 60%, transparent),
+        rgba(255, 255, 255, 0.1) 55%,
+        color-mix(in srgb, var(--f-brand) 40%, transparent)
+      )
+      border-box;
+}
+
+.pillName {
+  font-weight: 600;
+  color: #fff;
+}
+
+.pillRule {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.pillPrice {
+  font-variant-numeric: tabular-nums;
+}
+
+// -------------------------------------------------------------- hero glow
+
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  // Fades out before the hero ends, so no edge shows.
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 92%);
+
+  // Wider screens: also fade in from the top, so the light seems to come
+  // from behind the terminal rather than from under the bar.
+  @media (min-width: 1024px) {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 22%,
+      #000 62%,
+      transparent 96%
+    );
+  }
+}
+
+.aurora {
+  position: absolute;
+  inset: -10% -8% 0 -8%;
+  // Phones: one centred bloom above the headline.
+  background:
+    radial-gradient(
+      60% 30% at 70% 8%,
+      color-mix(in srgb, var(--f-glow) 30%, transparent) 0%,
+      transparent 72%
+    ),
+    radial-gradient(45% 22% at 25% 4%, color-mix(in srgb, var(--f-brand) 12%, transparent) 0%, transparent 72%);
+  transform-origin: 60% 10%;
+  animation: drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+
+  // Wider screens: the light rises from behind the terminal and spills past
+  // its edges.
+  @media (min-width: 1024px) {
+    background:
+      radial-gradient(
+        40% 56% at 73% 50%,
+        color-mix(in srgb, var(--f-glow) 42%, transparent) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        22% 30% at 88% 32%,
+        color-mix(in srgb, var(--f-accent) 26%, transparent) 0%,
+        transparent 70%
+      ),
+      radial-gradient(24% 34% at 58% 66%, color-mix(in srgb, var(--f-brand) 16%, transparent) 0%, transparent 70%);
+    transform-origin: 73% 50%;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-1.5%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1.5%, -2%, 0) scale(1.08);
+  }
+}
+
+// --------------------------------------------------------- plan card badge
+
+.festiveCard {
+  position: relative;
+  border-color: color-mix(in srgb, var(--f-accent) 40%, rgba(255, 255, 255, 0.1)) !important;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--f-accent) 12%, transparent),
+    0 40px 100px -40px color-mix(in srgb, var(--f-glow) 55%, transparent),
+    0 24px 60px -36px color-mix(in srgb, var(--f-brand) 35%, transparent) !important;
+}
+
+// The card's top edge, lit in the middle.
+.cardEdge {
+  position: absolute;
+  top: -1px;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--f-accent), transparent);
+}
+
+.ribbon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 26px;
+  padding: 0 12px 0 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--f-surface);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--f-accent) 45%, transparent),
+    0 8px 24px -10px color-mix(in srgb, var(--f-glow) 80%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none;
+  }
+  .cta,
+  .chevron,
+  .close {
+    transition: none;
+  }
+}

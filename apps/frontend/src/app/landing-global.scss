@@ -1,0 +1,256 @@
+// Marketing-only stylesheet.
+//
+// The landing pages were importing global.scss, which pulls in the whole app's
+// CSS: Polotno's design-editor styles (388KB) and Uppy's uploader styles (78KB)
+// on top of Tailwind. The served bundle was 483KB, of which roughly 96% was
+// editor and uploader CSS that a marketing visitor never uses - and it sat on
+// the critical render path as the single biggest render-blocking resource.
+//
+// This carries only what a marketing page needs: the colour variables, Tailwind,
+// and the two global body rules. The 818 lines of app component styles in
+// global.scss (swal2 modals, react-tags, the markdown editor, table1) are not
+// referenced anywhere under (landing) - verified before splitting.
+//
+// If a landing page ever needs an app component, import that component's styles
+// with it rather than putting the whole app bundle back on this path.
+@use './colors.scss';
+@use './mobile.scss';
+
+// Generate these utilities from the marketing pages only. Without this the
+// sheet is built from the whole monorepo and inlined into every landing page.
+@config '../../tailwind.landing.config.cjs';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+body {
+  background: var(--new-bgColor) !important;
+  color: var(--new-btn-text);
+}
+
+body * {
+  outline: none !important;
+}
+
+/* Homepage blocks a full screen or more below the fold (BelowFold in
+   (landing)/page.tsx). The browser skips their style, layout and paint until
+   they come near the viewport, so the first frame lays out the hero and the
+   demo instead of all ~15,000px of a phone-width page. On a GitHub runner that
+   first style+layout pass was ~62 ms of main thread before anything painted,
+   and Lighthouse's mobile run counts it four times over in Total Blocking Time.
+   The pixels are the same once a block is on screen; the content stays in the
+   DOM, so crawlers, find-in-page, anchors and screen readers still reach it.
+   The placeholder heights are the blocks' measured heights (phone / desktop),
+   and `auto` keeps the real height once a block has rendered, so the scrollbar
+   barely moves. Browsers without content-visibility render as before. */
+.hp-below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--below-fold-sm, 1000px);
+}
+
+@media (min-width: 1024px) {
+  .hp-below-fold {
+    contain-intrinsic-size: auto var(--below-fold-lg, 600px);
+  }
+}
+
+
+/* ---------------------------------------------------------------------------
+   MERGED FROM hookpost-landing.css.
+   It was a separate import, so Next emitted a second stylesheet and the browser
+   made two serial blocking requests before it could paint. Lighthouse measured
+   the 1KB file alone blocking render for 715ms - the round-trip, not the bytes.
+   One stylesheet, one request.
+   --------------------------------------------------------------------------- */
+/* The rupee sign costs 41KB of webfont.
+   Google Fonts splits each family into subsets guarded by unicode-range. U+20B9
+   (the INR sign) is not in `latin` - it falls inside latin-ext's U+20AD-20C0
+   currency block. The pricing block prints twelve of them, so every first-time
+   visitor downloaded the latin-ext woff2 for BOTH families - 22KB for Plus
+   Jakarta Sans plus 19KB for DM Sans - to draw one glyph, and nothing else on
+   any marketing page needs a latin-ext character.
+   Measured: the only visible codepoint on the homepage inside those ranges is
+   U+20B9, twelve occurrences.
+   `subsets: ['latin']` in layout.tsx does NOT prevent this. That option controls
+   which subsets get PRELOADED; next/font still emits the @font-face rules for
+   every subset Google publishes, so one matching character triggers the fetch.
+   So map that single codepoint to a face the machine already has. Listed first,
+   it wins for U+20B9 only - its unicode-range makes it inapplicable to every
+   other character, which continues to come from the real family. If none of the
+   locals resolve, the face is simply dropped and the glyph falls through to the
+   next family in the stack, i.e. exactly today's behaviour. No regression path.
+   Trade-off: the sign itself is drawn in the system UI font rather than Jakarta.
+   At the size it renders next to a numeral this is not noticeable, and it is the
+   same thing that would happen if Google shipped a latin-only file.
+
+   Put 'RupeeSign' on the font-family rules below and NOT into --font-dm /
+   --font-jakarta. Doing it in :root looks tidier and silently does nothing:
+   next/font emits its own `.dm_sans_..._variable { --font-dm: 'DM Sans',
+   'DM Sans Fallback' }`, layout.tsx puts that class on <body>, and it lands
+   later in the cascade at equal specificity - so it wins for <body> and every
+   descendant, which is the entire page. :root then only ever applies to the
+   bare <html> element, where no text lives. Verified against production: the
+   latin-ext files were still downloaded with the :root version in place.
+   Listing the family ahead of var(--font-*) works whichever value wins. */
+@font-face {
+  font-family: 'RupeeSign';
+  src: local('Segoe UI'), local('Roboto'), local('Helvetica Neue'),
+       local('Arial'), local('Noto Sans'), local('DejaVu Sans'),
+       local('Liberation Sans');
+  unicode-range: U+20B9;
+}
+
+:root {
+  --font-dm: 'DM Sans', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  // The marketing accent, kept under its old name for the festival theme
+  // (festival.module.scss). Brand colours are --hp-* tokens from the active
+  // brand theme (libraries/helpers/src/brand/brand-themes.ts).
+  --pink: var(--hp-primary);
+}
+
+body {
+  background-color: var(--hp-bg) !important;
+  color: var(--hp-text);
+  font-family: 'RupeeSign', var(--font-dm) !important;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-jakarta {
+  font-family: 'RupeeSign', var(--font-jakarta) !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(34px, 5vw, 68px) !important;
+  line-height: 1.06 !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+.font-dm {
+  font-family: 'RupeeSign', var(--font-dm) !important;
+}
+
+/* 15-column and 10-column Grid utilities for Social Icons */
+.grid-cols-15, 
+.sm\:grid-cols-15,
+div[class*="grid-cols-15"] {
+  display: grid !important;
+  grid-template-columns: repeat(15, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  max-width: 720px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (max-width: 640px) {
+  .max-sm\:grid-cols-10,
+  div[class*="max-sm:grid-cols-10"] {
+    display: grid !important;
+    grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+  }
+}
+
+.bg-pink {
+  background-color: var(--hp-primary) !important;
+}
+
+.hover\:bg-pink:hover {
+  background-color: var(--hp-primary) !important;
+}
+
+.text-pink {
+  color: var(--hp-primary-text) !important;
+}
+
+.hover\:text-pink:hover {
+  color: var(--hp-primary-text) !important;
+}
+
+.stroke-pink {
+  stroke: var(--hp-primary) !important;
+}
+
+.hover\:stroke-pink:hover {
+  stroke: var(--hp-primary) !important;
+}
+
+.border-pink {
+  border-color: var(--hp-primary) !important;
+}
+
+.hover\:border-pink:hover {
+  border-color: var(--hp-primary) !important;
+}
+
+.bg-boxOne {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hp-primary) 8%, var(--hp-surface)) 0%, var(--hp-bg) 100%);
+  border: 1px solid var(--hp-border);
+}
+
+.bg-boxTwo {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hp-accent) 8%, var(--hp-surface)) 0%, var(--hp-bg) 100%);
+  border: 1px solid var(--hp-border);
+}
+
+.bg-boxThree {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hp-chart-4) 8%, var(--hp-surface)) 0%, var(--hp-bg) 100%);
+  border: 1px solid var(--hp-border);
+}
+
+.bg-boxFour {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hp-chart-3) 8%, var(--hp-surface)) 0%, var(--hp-bg) 100%);
+  border: 1px solid var(--hp-border);
+}
+
+.bg-gradientBlue {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--hp-primary) 30%, var(--hp-bg)) 0%, color-mix(in srgb, var(--hp-primary) 10%, var(--hp-bg)) 100%);
+}
+
+/* Smooth clean page scroll */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Premium minimalist dark scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--hp-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--hp-border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hp-primary);
+}
+
+// A long URL in inline code (the MCP endpoint, API paths) cannot break, so it
+// set the minimum width of the card around it: on a 320px phone the /mcp
+// "How the server works" cards ran 36px off screen. Code blocks (<pre>) keep
+// their own sideways scroll.
+:not(pre) > code {
+  overflow-wrap: anywhere;
+}

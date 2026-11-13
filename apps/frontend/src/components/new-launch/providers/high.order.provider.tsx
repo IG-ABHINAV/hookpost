@@ -1,0 +1,391 @@
+'use client';
+
+import React, {
+  FC,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+} from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { IsOptional } from 'class-validator';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { useLaunchStore } from '@hookpost/frontend/components/new-launch/store';
+import { useShallow } from 'zustand/react/shallow';
+import { GeneralPreviewComponent } from '@hookpost/frontend/components/launches/general.preview.component';
+import { IntegrationContext } from '@hookpost/frontend/components/launches/helpers/use.integration';
+import { useT } from '@hookpost/react/translation/get.transation.service.client';
+import { useFetch } from '@hookpost/helpers/utils/custom.fetch';
+import useSWR from 'swr';
+import { InternalChannels } from '@hookpost/frontend/components/launches/internal.channels';
+import { createPortal } from 'react-dom';
+import clsx from 'clsx';
+import SafeImage from '@hookpost/react/helpers/safe.image';
+
+class Empty {
+  @IsOptional()
+  empty: string;
+}
+
+export { PostComment } from '@hookpost/frontend/components/new-launch/providers/post-comment.enum';
+import { PostComment } from '@hookpost/frontend/components/new-launch/providers/post-comment.enum';
+
+interface CharacterCondition {
+  format: 'no-pictures' | 'with-pictures';
+  type: 'post' | 'comment';
+  maximumCharacters: number;
+}
+
+export const withProvider = function <T extends object>(params: {
+  comments?: boolean | 'no-media';
+  postComment: PostComment;
+  minimumCharacters: CharacterCondition[];
+  SettingsComponent: FC<{
+    values?: any;
+  }> | null;
+  CustomPreviewComponent?: FC<{
+    maximumCharacters?: number;
+  }>;
+  dto?: any;
+  // A function gets the channel's additionalSettings and this post's settings
+  maximumCharacters?:
+    | number
+    | ((additionalSettings: any, settings?: any) => number);
+}) {
+  const {
+    postComment,
+    SettingsComponent,
+    CustomPreviewComponent,
+    dto,
+    maximumCharacters,
+  } = params;
+
+  const Wrapped = forwardRef((props: { id: string }, ref) => {
+    const t = useT();
+    const fetch = useFetch();
+    const {
+      current,
+      selectedIntegration,
+      setCurrent,
+      internal,
+      global,
+      date,
+      isGlobal,
+      tab,
+      setTotalChars,
+      justCurrent,
+      allIntegrations,
+      setPostComment,
+      setEditor,
+      dummy,
+      setChars,
+      setComments,
+      setHide,
+      setSettingsInvalid,
+      setSettingsDirty,
+      setCommentless,
+    } = useLaunchStore(
+      useShallow((state) => ({
+        date: state.date,
+        tab: state.tab,
+        global: state.global,
+        dummy: state.dummy,
+        internal: state.internal.find((p) => p.integration.id === props.id),
+        integrations: state.selectedIntegrations,
+        setHide: state.setHide,
+        allIntegrations: state.integrations,
+        justCurrent: state.current,
+        current: state.current === props.id,
+        isGlobal: state.current === 'global',
+        setCurrent: state.setCurrent,
+        setComments: state.setComments,
+        setTotalChars: state.setTotalChars,
+        setPostComment: state.setPostComment,
+        setEditor: state.setEditor,
+        setChars: state.setChars,
+        setSettingsInvalid: state.setSettingsInvalid,
+        setSettingsDirty: state.setSettingsDirty,
+        setCommentless: state.setCommentless,
+        selectedIntegration: state.selectedIntegrations.find(
+          (p) => p.integration.id === props.id
+        ),
+      }))
+    );
+
+    const getInternalPlugs = useCallback(async () => {
+      return (
+        await fetch(
+          `/integrations/${selectedIntegration.integration.identifier}/internal-plugs`
+        )
+      ).json();
+    }, [selectedIntegration.integration.identifier]);
+    const { data, isLoading } = useSWR(
+      `internal-${selectedIntegration.integration.identifier}`,
+      getInternalPlugs,
+      {
+        revalidateOnReconnect: true,
+      }
+    );
+
+    const value = useMemo(() => {
+      if (internal?.integrationValue?.length) {
+        return internal.integrationValue;
+      }
+
+      return global;
+    }, [internal, global, isGlobal]);
+
+    const form = useForm({
+      resolver: classValidatorResolver(dto || Empty),
+      ...(Object.keys(selectedIntegration.settings).length > 0
+        ? { values: { ...selectedIntegration.settings } }
+        : {}),
+      mode: 'all',
+      criteriaMode: 'all',
+      reValidateMode: 'onChange',
+    });
+
+    // The limit can depend on this post's own settings (an X article takes
+    // far more than a tweet), so it follows the settings form as it changes.
+    const limitFor = (settings?: any) =>
+      typeof maximumCharacters === 'number'
+        ? maximumCharacters
+        : maximumCharacters(
+            JSON.parse(
+              selectedIntegration.integration.additionalSettings || '[]'
+            ),
+            settings
+          );
+    const limit = limitFor(form.watch());
+
+    useEffect(() => {
+      if (!setTotalChars) {
+        return;
+      }
+
+      setChars(props.id, limit);
+
+      if (isGlobal) {
+        setComments(true);
+        setPostComment(PostComment.ALL);
+        setTotalChars(0);
+        setEditor('normal');
+      }
+
+      if (current) {
+        setComments(
+          typeof params.comments === 'undefined' ? true : params.comments
+        );
+        setEditor(selectedIntegration?.integration.editor);
+        setPostComment(postComment);
+        setTotalChars(limit);
+      }
+    }, [justCurrent, current, isGlobal, setTotalChars, limit]);
+
+    // A provider whose settings are required (a Pinterest board, a YouTube
+    // title, a Facebook post type) used to look exactly like a finished one:
+    // nothing on the tab said anything was missing until Post now failed
+    // validation server-side. The form already validates against the same DTO
+    // with mode: 'all', so publish that verdict to the tab strip. Providers
+    // without a `dto` resolve against Empty and are always valid, so they never
+    // light up.
+    const settingsValid = form.formState.isValid;
+    useEffect(() => {
+      setSettingsInvalid(props.id, !!dto && !settingsValid);
+
+      return () => {
+        setSettingsInvalid(props.id, false);
+      };
+    }, [props.id, settingsValid]);
+
+    // Closing the composer asks only when something changed: an edit in this
+    // channel's settings counts. react-hook-form marks the form dirty on a
+    // field's own change, or on a setValue made with shouldDirty; values a
+    // settings component fills in by itself (TikTok's creator limits) do not.
+    const settingsDirty = form.formState.isDirty;
+    useEffect(() => {
+      setSettingsDirty(props.id, settingsDirty);
+
+      return () => {
+        setSettingsDirty(props.id, false);
+      };
+    }, [props.id, settingsDirty]);
+
+    // `params.comments: false` already hides the comment box on THIS channel's
+    // own tab, but a comment written in global mode is accepted for everyone
+    // and then dropped for these channels with no warning at all - the backend
+    // only asks `isCommentable` (does the provider implement comment()) once
+    // it is already publishing. Publish it so the editor can say so up front.
+    useEffect(() => {
+      setCommentless(props.id, params.comments === false);
+
+      return () => {
+        setCommentless(props.id, false);
+      };
+    }, [props.id]);
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        isValid: async () => {
+          const settings = form.getValues();
+          return {
+            id: props.id,
+            identifier: selectedIntegration.integration.identifier,
+            integration: selectedIntegration.integration,
+            valid: await form.trigger(),
+            err: form.formState.errors,
+            settings,
+            values: value,
+            maximumCharacters: limitFor(settings),
+            fix: () => {
+              setCurrent(props.id);
+              setHide(true);
+            },
+            preview: () => {
+              setCurrent(props.id);
+              setHide(true);
+            },
+          };
+        },
+        getValues: () => {
+          return {
+            id: props.id,
+            identifier: selectedIntegration.integration.identifier,
+            values: value,
+            settings: form.getValues(),
+          };
+        },
+        trigger: () => {
+          return form.trigger();
+        },
+      }),
+      [value]
+    );
+
+    return (
+      <IntegrationContext.Provider
+        value={{
+          date,
+          integration: selectedIntegration.integration,
+          allIntegrations,
+          value: value.map((p) => ({
+            id: p.id,
+            content: p.content,
+            image: p.media,
+          })),
+        }}
+      >
+        <FormProvider {...form}>
+          <div
+            className={clsx(
+              'border border-borderPreview rounded-[12px] shadow-previewShadow',
+              !current && 'hidden'
+            )}
+          >
+            {current &&
+              (tab === 0 ||
+                (!SettingsComponent && !data?.internalPlugs?.length)) &&
+              !value?.[0]?.content?.length && (
+                <div>
+                  {t(
+                    'start_writing_your_post',
+                    'Start writing your post for a preview'
+                  )}
+                </div>
+              )}
+            {current &&
+              (tab === 0 ||
+                (!SettingsComponent && !data?.internalPlugs?.length)) &&
+              !!value?.[0]?.content?.length &&
+              (CustomPreviewComponent ? (
+                <CustomPreviewComponent maximumCharacters={limit} />
+              ) : (
+                <GeneralPreviewComponent maximumCharacters={limit} />
+              ))}
+            {(SettingsComponent || !!data?.internalPlugs?.length) &&
+              createPortal(
+                <div
+                  data-id={props.id}
+                  className={
+                    isGlobal
+                      ? 'bg-newSettings pb-[12px] px-[12px]'
+                      : 'hidden bg-newSettings px-[12px] pb-[12px]'
+                  }
+                >
+                  {isGlobal && (
+                    <style>{`#wrapper-settings {display: flex !important} #social-empty {display: block !important;}`}</style>
+                  )}
+                  {isGlobal && (
+                    <div className="flex py-[20px] items-center gap-[15px]">
+                      <div className="relative">
+                        <SafeImage
+                          alt={selectedIntegration?.integration.name!}
+                          width={42}
+                          height={42}
+                          className="min-w-[42px] min-h-[42px] w-[42px] h-[42px] rounded-full"
+                          src={selectedIntegration?.integration.picture}
+                        />
+                        <SafeImage
+                          alt={selectedIntegration?.integration.identifier}
+                          width={16}
+                          height={16}
+                          className="rounded-[16px] min-w-[16px] min-h-[16px] w-[16px] h-[16px] absolute bottom-0 end-0"
+                          src={`/icons/platforms/${selectedIntegration?.integration.identifier}.png`}
+                        />
+                      </div>
+                      <div className="text-[20px]">
+                        {selectedIntegration?.integration.name}
+                      </div>
+                    </div>
+                  )}
+                  <SettingsComponent />
+                  {!!data?.internalPlugs?.length && !dummy && (
+                    <InternalChannels plugs={data?.internalPlugs} />
+                  )}
+                </div>,
+                document.querySelector('#social-settings') ||
+                  document.createElement('div')
+              )}
+            {current &&
+              !SettingsComponent &&
+              createPortal(
+                <style>{`#wrapper-settings {display: none !important;} #social-empty {display: block !important;}`}</style>,
+                document.querySelector('#social-settings') ||
+                  document.createElement('div')
+              )}
+          </div>
+        </FormProvider>
+      </IntegrationContext.Provider>
+    );
+  });
+
+  // Expose the settings configuration as static metadata so the preview /
+  // mobile settings page can render <SettingsComponent /> in isolation
+  // without pulling the launch store + DOM portals.
+  (Wrapped as any).__settings = {
+    SettingsComponent,
+    CustomPreviewComponent,
+    dto,
+    postComment,
+    maximumCharacters,
+  };
+
+  return Wrapped;
+};
+
+/** Pulls the settings metadata off a withProvider-wrapped component. */
+export const getProviderSettingsMeta = (component: unknown) => {
+  return (component as any)?.__settings as
+    | {
+        SettingsComponent: FC<{ values?: any }> | null;
+        CustomPreviewComponent?: FC<{ maximumCharacters?: number }>;
+        dto?: any;
+        postComment: PostComment;
+        maximumCharacters?:
+          | number
+          | ((additionalSettings: any, settings?: any) => number);
+      }
+    | undefined;
+};

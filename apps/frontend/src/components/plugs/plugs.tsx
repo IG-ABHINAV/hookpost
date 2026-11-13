@@ -1,0 +1,203 @@
+'use client';
+
+import { SidePanel } from '@hookpost/frontend/components/layout/side.panel';
+import useSWR from 'swr';
+import { useCallback, useMemo, useState } from 'react';
+import { capitalize, orderBy } from 'lodash';
+import clsx from 'clsx';
+import ImageWithFallback from '@hookpost/react/helpers/image.with.fallback';
+import SafeImage from '@hookpost/react/helpers/safe.image';
+import { useFetch } from '@hookpost/helpers/utils/custom.fetch';
+import { Select } from '@hookpost/react/form/select';
+import { Button } from '@hookpost/react/form/button';
+import { useRouter } from 'next/navigation';
+import { useToaster } from '@hookpost/react/toaster/toaster';
+import { PlugsContext } from '@hookpost/frontend/components/plugs/plugs.context';
+import { Plug } from '@hookpost/frontend/components/plugs/plug';
+import { useT } from '@hookpost/react/translation/get.transation.service.client';
+import useCookie from 'react-use-cookie';
+import { SVGLine } from '@hookpost/frontend/components/launches/launches.component';
+import { LoadingComponent } from '@hookpost/frontend/components/layout/loading';
+export const Plugs = () => {
+  const fetch = useFetch();
+  const router = useRouter();
+  const [current, setCurrent] = useState(0);
+  const [refresh, setRefresh] = useState(false);
+  const toaster = useToaster();
+  const load = useCallback(async () => {
+    return (await (await fetch('/integrations/list')).json()).integrations;
+  }, []);
+  const load2 = useCallback(async (path: string) => {
+    return await (await fetch(path)).json();
+  }, []);
+  const { data: plugList, isLoading: plugLoading } = useSWR(
+    '/integrations/plug/list',
+    load2,
+    {
+      fallbackData: [],
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+      revalidateOnMount: true,
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+    }
+  );
+  const { data, isLoading } = useSWR('analytics-list', load, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+    revalidateOnMount: true,
+    refreshWhenHidden: false,
+    refreshWhenOffline: false,
+    fallbackData: [],
+  });
+
+  const [collapseMenu, setCollapseMenu] = useCookie('collapseMenu', '0');
+
+  const t = useT();
+
+  const sortedIntegrations = useMemo(() => {
+    return orderBy(
+      data.filter((integration: any) =>
+        plugList?.plugs?.some(
+          (f: any) => f.identifier === integration.identifier
+        )
+      ),
+      // data.filter((integration) => !integration.disabled),
+      ['type', 'disabled', 'identifier'],
+      ['desc', 'asc', 'asc']
+    );
+  }, [data, plugList]);
+  const currentIntegration = useMemo(() => {
+    return sortedIntegrations[current];
+  }, [current, sortedIntegrations]);
+  const currentIntegrationPlug = useMemo(() => {
+    const plug = plugList?.plugs?.find(
+      (f: any) => f?.identifier === currentIntegration?.identifier
+    );
+    if (!plug) {
+      return null;
+    }
+    return {
+      providerId: currentIntegration.id,
+      ...plug,
+    };
+  }, [currentIntegration, plugList]);
+
+  if (isLoading || plugLoading) {
+    return (
+      <div className="bg-newBgColorInner p-[20px] flex flex-1 flex-col gap-[15px] transition-all items-center justify-center">
+        <LoadingComponent />
+      </div>
+    );
+  }
+
+  if (!sortedIntegrations.length && !isLoading) {
+    return (
+      <div className="bg-newBgColorInner p-[20px] flex flex-1 flex-col gap-[15px] transition-all items-center justify-center">
+        <div>
+          <img src="/peoplemarketplace.svg" />
+        </div>
+        <div className="text-[48px]">
+          {t(
+            'there_are_not_plugs_matching_your_channels',
+            'There are not plugs matching your channels'
+          )}
+          <br />
+          {t(
+            'you_have_to_add_x_linkedin_page_threads_or_bluesky',
+            'You have to add: X, LinkedIn Page, Threads or Bluesky'
+          )}
+        </div>
+        <Button onClick={() => router.push('/launches')}>
+          {t(
+            'go_to_the_calendar_to_add_channels',
+            'Go to the calendar to add channels'
+          )}
+        </Button>
+      </div>
+    );
+  }
+  return (
+    <>
+      <SidePanel
+        title={t('channels')}
+        collapsed={collapseMenu === '1'}
+        onToggle={() => setCollapseMenu(collapseMenu === '1' ? '0' : '1')}
+      >
+          {sortedIntegrations.map((integration, index) => (
+            <div
+              key={integration.id}
+              onClick={() => {
+                if (integration.refreshNeeded) {
+                  toaster.show(
+                    'Please refresh the integration from the calendar',
+                    'warning'
+                  );
+                  return;
+                }
+                setRefresh(true);
+                setTimeout(() => {
+                  setRefresh(false);
+                }, 10);
+                setCurrent(index);
+              }}
+              className={clsx(
+                'flex gap-[8px] items-center justify-center group/profile hover:bg-boxHover rounded-e-[8px]',
+                currentIntegration.id !== integration.id &&
+                  'opacity-20 hover:opacity-100 cursor-pointer'
+              )}
+            >
+              <div
+                className={clsx(
+                  'relative rounded-full flex justify-center items-center gap-[8px]',
+                  integration.disabled && 'opacity-50'
+                )}
+              >
+                {(integration.inBetweenSteps || integration.refreshNeeded) && (
+                  <div className="absolute start-0 top-0 w-[39px] h-[46px] cursor-pointer">
+                    <div className="bg-red-500 w-[15px] h-[15px] rounded-full start-0 -top-[5px] absolute z-[200] text-[10px] flex justify-center items-center">
+                      !
+                    </div>
+                    <div className="bg-primary/60 w-[39px] h-[46px] start-0 top-0 absolute rounded-full z-[199]" />
+                  </div>
+                )}
+                <div className="h-full w-[4px] -ms-[12px] rounded-s-[3px] opacity-0 group-hover/profile:opacity-100 transition-opacity">
+                  <SVGLine />
+                </div>
+                <ImageWithFallback
+                  fallbackSrc={`/icons/platforms/${integration.identifier}.png`}
+                  src={integration.picture}
+                  className="rounded-[8px]"
+                  alt={integration.identifier}
+                  width={36}
+                  height={36}
+                />
+                <SafeImage
+                  src={`/icons/platforms/${integration.identifier}.png`}
+                  className="rounded-[8px] absolute z-10 bottom-[5px] -end-[5px] border border-fifth"
+                  alt={integration.identifier}
+                  width={18.41}
+                  height={18.41}
+                />
+              </div>
+              <div
+                className={clsx(
+                  'flex-1 whitespace-nowrap text-ellipsis overflow-hidden group-[.sidebar]:hidden',
+                  integration.disabled && 'opacity-50'
+                )}
+              >
+                {integration.name}
+              </div>
+            </div>
+          ))}
+      </SidePanel>
+      <div className="bg-newBgColorInner flex-1 flex-col flex p-[12px] md:p-[20px] gap-[12px] min-w-0">
+        <PlugsContext.Provider value={currentIntegrationPlug}>
+          <Plug />
+        </PlugsContext.Provider>
+      </div>
+    </>
+  );
+};

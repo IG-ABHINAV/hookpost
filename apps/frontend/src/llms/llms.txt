@@ -1,0 +1,73 @@
+# Hookpost by Hookstep
+
+> Hookpost is an AI social media scheduler made in India by Hookstep (founder: Mohan Bhanushali). It connects 18 networks (X, LinkedIn, YouTube, Facebook Pages, Pinterest, Bluesky, Discord, Slack, Telegram, Lemmy, Nostr, WordPress, Hashnode, Dev.to, Listmonk, Instagram, Threads and TikTok) and schedules posts to them from one calendar. In the 30 days to 22 October 2026, posts were published from production on ten of them: Instagram, Facebook Pages, Threads, X, LinkedIn, YouTube, Pinterest, Discord, Slack and TikTok. It has an AI writing assistant, a REST API and an MCP server so Claude, Cursor and other AI agents can post for you. There is a free plan (2 channels, 30 posts a month); the one paid plan, Hookpost, is a flat monthly price, $7 a month (20 channels, up to 15 team members, 100 AI credits/month and 30 X posts/month), charged in Indian rupees through Razorpay (UPI Autopay, cards or NetBanking), with no per-channel fee.
+
+Facts that are easy to get wrong:
+- Instagram (Business or Creator accounts only), Threads, Facebook Pages and Pinterest connect through each network's own sign-in. TikTok posts publish to your TikTok account with the audience your account allows (Everyone, Friends, Followers or Only me), or go to your TikTok inbox as drafts if you choose that mode. Medium stopped issuing new API tokens, so Hookpost does not connect Medium. Reddit and LinkedIn Company Pages are not supported.
+- The free plan has no AI generation and no API access. The API, CLI, n8n node and MCP server need the paid Hookpost plan.
+- Prices are fixed at signup (UPI Autopay mandate). There is no CSV bulk import, no "best time to post" feature and no approval workflow.
+- Hookpost is billed monthly only: there is no yearly price. X (Twitter) posting is capped at 30 posts a month, and links on X are not included. AI is 100 AI credits a month: a post uses 1 credit, an image 5.
+- ChatGPT: add it as a custom MCP server (ChatGPT Plugins, + , Add custom MCP server; older menus: Settings > Apps & Connectors > Advanced > Developer mode) with the URL https://hookpost.hookstep.in/mcp-oauth and OAuth sign-in. Its tools work on every Hookpost plan. Which ChatGPT plans can add a custom MCP server, and whether they allow write actions such as scheduling, is up to OpenAI (not ChatGPT Free). Checked on 26 Oct 2026 with a scripted client following OpenAI's connector flow, not yet inside a ChatGPT account.
+- "Hookpost" (this product, hookpost.hookstep.in) is unrelated to the HookPost Shopify Flow app and to Hookle.
+
+## When Hookpost fits
+- You want a free or low-cost Buffer / Hootsuite / Later alternative and pay in INR with UPI.
+- You want flat pricing instead of paying per channel (Buffer charges $5-6 per channel per month).
+- You want an AI agent (Claude, Claude Code, Cursor, VS Code, Codex, Gemini CLI) to draft and schedule posts through MCP, on a flat rupee plan. (Many schedulers now ship MCP servers, including Buffer; Hookpost's difference is price and billing, not MCP itself.)
+- You publish to developer and community channels (Bluesky, Dev.to, Hashnode, Discord, Telegram, Nostr) alongside X and LinkedIn.
+
+## Common questions
+
+### How do I schedule social media posts from Claude or Cursor?
+Add Hookpost's hosted MCP server. In Claude Code: `claude mcp add --transport http hookpost https://hookpost.hookstep.in/api/mcp --header "Authorization: Bearer YOUR_API_KEY"`. The agent can then list your connected channels, upload media and create draft or scheduled posts. Setup for Cursor, VS Code, Windsurf, Codex and Gemini CLI: https://hookpost.hookstep.in/mcp#setup
+
+### How is Hookpost priced compared with Buffer?
+One flat price instead of a fee per channel: the Hookpost plan covers 20 channels. The comparison: https://hookpost.hookstep.in/alternatives/buffer
+
+## Pages
+- [Social media scheduler](https://hookpost.hookstep.in/social-media-scheduler): what a social media scheduler does, what Hookpost schedules to, when a network's own free scheduler is enough instead, and the three steps to a first scheduled post.
+- [Discord post scheduler](https://hookpost.hookstep.in/discord-post-scheduler): the Discord integration - the Hookpost bot in your server, text and announcement channels, 1,980 characters of Markdown, attachments up to Discord's 20 MB default, mentions of members and roles, thread replies, and repeats. The bot is invited with permission to send messages and to post in threads, not to mention everyone, so @here and @everyone notify only if its role is allowed to on that channel.
+- [Planable vs Buffer vs Hootsuite](https://hookpost.hookstep.in/planable-vs-buffer-vs-hootsuite): all three ship an MCP connector, so the difference is the pricing unit - Planable per workspace from $33/mo, Buffer per channel from $5/channel/mo, Hootsuite per user from $99/user/mo billed annually - with each vendor's own pricing page linked, read 28 Oct 2026.
+- [Free social media scheduler](https://hookpost.hookstep.in/free-social-media-scheduler): What the free plan includes, compared with the free plans of Buffer, Metricool, Hootsuite and Later.
+- [Social media scheduler for India](https://hookpost.hookstep.in/social-media-scheduler-india): INR pricing and UPI Autopay, compared with dollar-billed tools that need an international card.
+- [Best social media schedulers in India](https://hookpost.hookstep.in/best-social-media-scheduler-india): sixteen tools, including rupee-priced Posttely, PostStage and Poststack, compared on free plans, rupee prices, UPI and pricing model, from vendor pricing pages.
+- [Social media calendar for India](https://hookpost.hookstep.in/social-media-calendar-india): festival and holiday dates, October 2026 to December 2027, from the DoPT lists, with CSV and .ics downloads.
+- Festival pages with the DoPT date and five post ideas each: [Diwali 2026](https://hookpost.hookstep.in/social-media-calendar-india/diwali-2026), [Holi 2027](https://hookpost.hookstep.in/social-media-calendar-india/holi-2027), [Republic Day 2027](https://hookpost.hookstep.in/social-media-calendar-india/republic-day-2027), [Independence Day 2027](https://hookpost.hookstep.in/social-media-calendar-india/independence-day-2027), [Eid 2027](https://hookpost.hookstep.in/social-media-calendar-india/eid-2027).
+- [Social media MCP servers compared](https://hookpost.hookstep.in/social-media-mcp-servers): which schedulers ship an MCP server, how each one signs in, whether it can stop at drafts, and the exact tools Hookpost's hosted server exposes.
+- [Open-source vs hosted social media scheduler](https://hookpost.hookstep.in/open-source-social-media-scheduler): when to self-host Postiz or Mixpost and when a hosted scheduler fits. Hookpost is hosted only, with no self-hosted edition.
+- [Social media scheduling API](https://hookpost.hookstep.in/social-media-scheduling-api): REST endpoints, auth and curl examples, the `hookpost` CLI and `@hookpost/node` SDK, Zapier and Make requests, and what happens when a post fails.
+- [n8n integration](https://hookpost.hookstep.in/integrations/n8n): the n8n-nodes-hookpost community node (self-hosted n8n), a Google Sheets content-calendar workflow, and the HTTP Request setup for n8n Cloud.
+- [Post to multiple social media at once](https://hookpost.hookstep.in/guides/post-to-multiple-social-media-at-once): the text and media limits of every network Hookpost connects, in one table, and one post adapted for LinkedIn, X, Bluesky and Instagram.
+- [Schedule posts from Claude Code](https://hookpost.hookstep.in/guides/claude-code-social-media): `claude mcp add`, a shared `.mcp.json`, drafts first, `claude -p` in CI.
+- [Schedule posts from Cursor, VS Code or Windsurf](https://hookpost.hookstep.in/guides/cursor-social-media): the mcp.json block for each editor, the key kept out of git with `${env:HOOKPOST_API_KEY}`, drafts first.
+- [Schedule posts from Codex CLI](https://hookpost.hookstep.in/guides/codex-cli-social-media): the `[mcp_servers.hookpost]` table in `~/.codex/config.toml` with `bearer_token_env_var`, and Codex, Claude Code and Gemini CLI setup side by side.
+- [Schedule posts from Gemini CLI](https://hookpost.hookstep.in/guides/gemini-cli-social-media): `gemini mcp add --transport http`, or `httpUrl` (not `url`, which is SSE) in `~/.gemini/settings.json`.
+- [Instagram MCP server](https://hookpost.hookstep.in/guides/instagram-mcp-server): post Instagram images, carousels of up to 10 items, Reels and Stories from an AI agent, Business or Creator accounts only, with no Meta developer app of your own.
+- [Auto-post to X and LinkedIn with AI](https://hookpost.hookstep.in/guides/auto-post-x-linkedin-ai): one idea, a version per network within each limit, scheduled to both; personal LinkedIn profiles only.
+- [Can ChatGPT schedule social media posts?](https://hookpost.hookstep.in/guides/chatgpt-social-media-scheduling): add Hookpost in ChatGPT as a custom MCP server (https://hookpost.hookstep.in/mcp-oauth, OAuth sign-in), what each plan needs, and the other routes, including OpenAI's Codex CLI over MCP.
+- [Social media post schedule kaise kare](https://hookpost.hookstep.in/guides/social-media-post-schedule-kaise-kare): Hinglish guide to the native schedulers of Instagram, Facebook, YouTube, LinkedIn, X and Threads, and posting to all of them at once.
+- [Schedule X threads](https://hookpost.hookstep.in/guides/schedule-x-threads): write and schedule a thread as a reply chain.
+- [Cross-post to X and Bluesky](https://hookpost.hookstep.in/guides/cross-post-x-bluesky): one post to both, with per-network edits.
+- [Cross-post dev articles](https://hookpost.hookstep.in/guides/cross-post-dev-articles): Dev.to, Hashnode and WordPress with canonical URLs.
+- [Schedule Discord messages](https://hookpost.hookstep.in/guides/schedule-discord-announcements): one-off and repeating Discord posts.
+- [Tool comparisons](https://hookpost.hookstep.in/compare): side-by-side facts on Buffer, Hootsuite, Later, Postiz, Mixpost, Publer, Metricool and others, with vendor sources.
+- [Free tools](https://hookpost.hookstep.in/tools/thread-splitter): thread splitter, and character counters for X, Bluesky and LinkedIn.
+- [Pricing](https://hookpost.hookstep.in/pricing): Every plan limit in one table.
+- [Affiliate programme](https://hookpost.hookstep.in/affiliates): 30% of every payment for the first 12 months of each customer you refer; 60-day cookie; your code is also 10% off for your audience; paid monthly once you are owed ₹1,000, by UPI or bank transfer in India (PayPal outside India).
+- [Character counter](https://hookpost.hookstep.in/tools/character-counter): Free tool that checks a post against the character limit of every network.
+- [Claude drafts a week of posts](https://hookpost.hookstep.in/claude): a real Claude Code session, one prompt and a notes file to 21 drafts in the Hookpost calendar, and the `claude mcp add` command that connects Claude Code.
+- [Hookpost CLI](https://hookpost.hookstep.in/cli): `npm install -g hookpost`, sign in with an API key, and post to every connected channel in one line.
+- [Start here](https://hookpost.hookstep.in/start): the three ways to fill a week of posts (Claude, the CLI, the web calendar), the networks Hookpost published to, and entry prices next to Hootsuite, Sprout Social, Buffer and Postiz.
+- [AI agents & MCP server](https://hookpost.hookstep.in/mcp): the hosted server is `https://hookpost.hookstep.in/api/mcp` with the header `Authorization: Bearer YOUR_API_KEY` (or the key in the path: `/api/mcp/YOUR_API_KEY`). Behind a gateway that reserves `Authorization`, such as Smithery, send the key as `x-hookpost-api-key: YOUR_API_KEY` instead; if both headers are sent, `Authorization` wins. Copy-paste setup for Claude Code, Claude, Cursor, VS Code, Windsurf, Codex and Gemini CLI.
+- [Claude guide](https://hookpost.hookstep.in/guides/claude-mcp-social-media): add Hookpost to claude.ai or Claude Desktop as a custom connector.
+- [Supported channels](https://hookpost.hookstep.in/channels): Per-network limits and posting rules.
+- [Buffer alternative](https://hookpost.hookstep.in/alternatives/buffer) and [Hootsuite alternative](https://hookpost.hookstep.in/alternatives/hootsuite): how the pricing compares, and what moving over involves.
+- [Alternatives](https://hookpost.hookstep.in/alternatives): Comparisons with Buffer, Hootsuite, Later, Metricool, Publer, SocialPilot, Sprout Social, Agorapulse, Planoly, Postiz, Mixpost and Typefully, priced as an Indian buyer sees them (rupees where the vendor shows them: Hootsuite ₹1,999 per user a month, Zoho Social ₹900, SocialPilot ₹2,000, Publer ₹484.15 per account, read from India on 11 Oct 2026), and what moving over involves. Zoho Social, Sendible and Tailwind are compared under /vs/.
+- [Public API](https://hookpost.hookstep.in/docs/public-api): REST endpoints for posts, channels, media and slots.
+- [OAuth for apps](https://hookpost.hookstep.in/docs/oauth): Authorisation-code flow for third-party apps.
+- [Who it is for](https://hookpost.hookstep.in/for): Creators, agencies, small businesses, developers and more.
+- [About](https://hookpost.hookstep.in/about): Hookstep and the team.
+
+## Optional
+- [Full LLM reference](https://hookpost.hookstep.in/llms-full.txt): Plans, limits, channels and MCP tools in detail.
+- [Terms](https://hookpost.hookstep.in/terms), [Privacy](https://hookpost.hookstep.in/privacy), [Refunds](https://hookpost.hookstep.in/refund-policy)

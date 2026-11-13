@@ -1,0 +1,7 @@
+# Disable the default option to open a blank issue
+blank_issues_enabled: true
+
+contact_links:
+  - name: Security Issue
+    url: https://github.com/hookstep/hookpost/security/advisories/new
+    about: Please report security issues privately through GitHub Security Advisories.

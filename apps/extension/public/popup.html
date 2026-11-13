@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hookpost</title>
+<style>
+  /* brand:start - written by `pnpm brand:assets` from the active brand theme; do not edit */
+  :root { color-scheme: light dark; --bg: #FFFFFF; --fg: #0A1F1D; --muted: #566F6C; --line: #D3E2E0; --ok: #13804F; --bad: #C53030; --btn: #00796C; --btn-fg: #FFFFFF; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0B1D20; --fg: #E7F5F3; --muted: #A3BDBA; --line: #1E3A3E; --ok: #45D98F; --bad: #FF6E6E; --btn: #2EE6CF; --btn-fg: #032220; } }
+  /* brand:end */
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 320px; padding: 16px; background: var(--bg); color: var(--fg); font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  header img { width: 24px; height: 24px; }
+  h1 { font-size: 15px; margin: 0; }
+  ul { list-style: none; margin: 0 0 12px; padding: 0; border: 1px solid var(--line); border-radius: 8px; }
+  .row { display: grid; grid-template-columns: 10px 1fr; column-gap: 8px; padding: 8px 10px; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; grid-row: span 2; }
+  .ok .dot { background: var(--ok); }
+  .bad .dot { background: var(--bad); }
+  .label { font-weight: 600; }
+  .value { color: var(--muted); }
+  .bad .value { color: var(--bad); }
+  #error { color: var(--bad); margin: 0 0 12px; }
+  #open { display: block; text-align: center; padding: 9px 12px; border-radius: 8px; background: var(--btn); color: var(--btn-fg); font-weight: 600; text-decoration: none; }
+  #how { color: var(--muted); margin: 12px 0 0; }
+  #footer { color: var(--muted); font-size: 11px; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<header><img src="icon-32.png" alt=""><h1>Hookpost</h1></header>
+<p id="error" hidden></p>
+<ul id="rows"><li class="row"><span class="dot"></span><span class="label">Checking…</span></li></ul>
+<a id="open" href="https://hookpost.hookstep.in/launches?add_channel=1">Open Hookpost → Add Channel → Skool</a>
+<p id="how"></p>
+<p id="footer"></p>
+<script type="module" src="popup.js"></script>
+</body>
+</html>

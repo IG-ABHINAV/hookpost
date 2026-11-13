@@ -1,0 +1,12 @@
+{
+  "//": "Dev builds only (node scripts/build.mjs --dev). scripts/manifest.mjs appends these to manifest.json's lists; nothing else differs. Never in the store zip.",
+  "host_permissions": [
+    "http://localhost/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "https://localhost/*"
+    ]
+  }
+}

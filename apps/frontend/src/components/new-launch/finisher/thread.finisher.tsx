@@ -1,0 +1,84 @@
+'use client';
+
+import { Slider } from '@hookpost/react/form/slider';
+import clsx from 'clsx';
+import { Editor } from '@hookpost/frontend/components/new-launch/editor';
+import { useT } from '@hookpost/react/translation/get.transation.service.client';
+import { useIntegration } from '@hookpost/frontend/components/launches/helpers/use.integration';
+import { useSettings } from '@hookpost/frontend/components/launches/helpers/use.values';
+import { useLaunchStore } from '@hookpost/frontend/components/new-launch/store';
+
+// No provider publishes the finisher: x.provider and threads.provider only
+// declare the fields in their settings types, and bluesky.provider does not
+// mention them. The switch let users turn on a closing post that never went
+// out. Hidden until a provider actually posts it; flip this when one does.
+const THREAD_FINISHER_PUBLISHED = false;
+
+export const ThreadFinisher = () => {
+  const integration = useIntegration();
+  const { register, watch, setValue } = useSettings();
+  const dummy = useLaunchStore((p) => p.dummy);
+  const t = useT();
+
+  register('active_thread_finisher', {
+    value: false,
+  });
+
+  register('thread_finisher', {
+    value: t('that_a_wrap', {
+      username:
+        integration.integration?.display || integration.integration?.name,
+    }),
+  });
+
+  const slider = watch('active_thread_finisher');
+  const value = watch('thread_finisher');
+
+  if (!THREAD_FINISHER_PUBLISHED) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col gap-[10px] border-tableBorder border p-[15px] rounded-lg mb-5">
+      <div className="flex items-center">
+        <div className="flex-1">Add a thread finisher</div>
+        <div>
+          <Slider
+            value={slider ? 'on' : 'off'}
+            onChange={(p) =>
+              setValue('active_thread_finisher', p === 'on', {
+                shouldDirty: true,
+              })
+            }
+            fill={true}
+          />
+        </div>
+      </div>
+      <div className="w-full mt-[20px]">
+        <div
+          className={clsx(
+            !slider && 'relative opacity-25 pointer-events-none editor'
+          )}
+        >
+          <div>
+            <div className="flex gap-[4px]">
+              <div className="flex-1 editor text-textColor">
+                <Editor
+                  comments={true}
+                  chars={{}}
+                  selectedIntegration={[]}
+                  onChange={(val) =>
+                    setValue('thread_finisher', val, { shouldDirty: true })
+                  }
+                  value={value}
+                  totalPosts={1}
+                  dummy={dummy}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

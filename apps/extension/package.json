@@ -1,0 +1,11 @@
+{
+  "name": "hookpost-extension",
+  "version": "1.0.2",
+  "description": "Hookpost Chrome extension: connects a Skool account to Hookpost",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "dotenv -e ../../.env -- node scripts/build.mjs --dev --watch"
+  },
+  "type": "module",
+  "license": "AGPL-3.0"
+}

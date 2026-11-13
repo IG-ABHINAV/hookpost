@@ -1,0 +1,10 @@
+Hookpost
+Copyright (C) 2026 Hookstep
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3 of the License. See the LICENSE file.
+
+This product includes software from Postiz (https://github.com/gitroomhq/postiz-app), Copyright (C) 2025 Nevo David, Gitroom and the Postiz contributors, licensed under the GNU Affero General Public License v3.0. Hookstep modified that software from September 2026 onward and continues to modify it in this repository.
+
+Third-party npm packages are listed in pnpm-lock.yaml and keep their own licences.
+
+The Hookpost name and logo are trademarks of Hookstep and are not licensed under the AGPL (AGPL-3.0 section 7(e)).

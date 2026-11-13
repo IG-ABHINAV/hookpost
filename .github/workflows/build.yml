@@ -1,0 +1,64 @@
+name: Build
+
+# Unit tests and the production build on GitHub-hosted runners. Needs no
+# secrets: the specs mock Razorpay, Prisma and Redis and need no .env or network.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A new push to the same PR makes the running build moot.
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 22.12.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+
+      # The version comes from package.json's packageManager field.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Transpile only (apps/backend/jest.config.ts): type-checking every spec
+      # runs each worker past the runner's heap. The Build step below still
+      # type-checks the backend source.
+      - name: Unit tests (backend)
+        env:
+          JEST_TRANSPILE_ONLY: '1'
+        run: pnpm exec jest -c apps/backend/jest.config.ts --ci --maxWorkers=2
+
+      # The billing specs again with the trial switch on (trial.policy.ts).
+      - name: Unit tests (billing, trial switch on)
+        env:
+          TRIAL_CHECKOUT: 'on'
+        run: pnpm run test:billing:unit
+
+      - name: Unit tests (frontend)
+        run: pnpm exec jest -c apps/frontend/jest.config.ts --ci
+
+      - name: Unit tests (Chrome extension)
+        run: pnpm exec jest -c apps/extension/jest.config.ts --ci
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=6144"
+        run: pnpm run build

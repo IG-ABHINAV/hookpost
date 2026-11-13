@@ -1,0 +1,300 @@
+'use client';
+
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { TWA_HIDE_CLASS } from '@hookpost/frontend/components/layout/twa';
+
+// The only interactive thing on the homepage was this menu toggle, and one
+// useState was forcing the whole 588-line page to ship as a client component.
+// Isolating it here lets the page render on the server, so none of the marketing
+// copy, pricing tables or channel lists reach the browser as JavaScript.
+// Inside the Google Play app the Pricing link is hidden (TWA_HIDE_CLASS, see
+// components/layout/twa.ts): Play's Payments policy keeps web plan prices out of
+// the app. The nav stays reachable there from the policy pages.
+const hideInTwa = (href: string) => (href === '/pricing' ? TWA_HIDE_CLASS : undefined);
+
+const LINKS: [string, string][] = [
+  ['AI agents & MCP', '/mcp'],
+  ['Channels', '/channels'],
+  ['Developers', '/docs/public-api'],
+  // Was the bare fragment '#pricing', which is dead on every landing page
+  // that is not the homepage - about 70 of them.
+  ['Pricing', '/pricing'],
+  ['Support', '/contact'],
+];
+
+/**
+ * The nav itself. Pages import SiteNav from ./site-nav, the server wrapper
+ * that passes the sign-up label: "Start free", or the trial's once new users
+ * have no Free plan (trial-offer.ts, decided at build).
+ */
+export const SiteNavClient = ({ ctaLabel }: { ctaLabel: string }) => {
+  const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    // 1. Fast synchronous check via document.cookie for zero-delay paint
+    let hasLoginMarker = false;
+    try {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const c = cookies[i].trim();
+        if (
+          (c.indexOf('hp_logged_in=1') === 0 || c.indexOf('auth=') === 0) &&
+          c.length > 5
+        ) {
+          const val = c.split('=')[1]?.trim();
+          if (val && val !== '""' && val !== "''") {
+            hasLoginMarker = true;
+            setIsLoggedIn(true);
+            break;
+          }
+        }
+      }
+    } catch (e) {}
+
+    // No marker means the visitor cannot be signed in, so skip the verification
+    // call entirely. Every path in auth.controller.ts that writes the HttpOnly
+    // `auth` cookie writes the readable `hp_logged_in` companion in the same
+    // response, and logout clears both - checked all four, so the marker is a
+    // reliable negative.
+    //
+    // This is not a micro-optimisation. Anonymous visitors are almost all of
+    // the marketing traffic, and for every one of them this fetch returned 401.
+    // The browser logs that as a failed request whatever the JS does with it,
+    // which cost a Lighthouse Best Practices audit ("Browser errors were logged
+    // to the console") on every landing page, and spent a round trip to learn
+    // something the absent cookie already said.
+    if (!hasLoginMarker) return;
+
+    // 2. Reliable session verification with server credentials (works even with HttpOnly cookies)
+    fetch('/api/user/self', { credentials: 'include' })
+      .then((res) => {
+        if (!active) return;
+        if (res.ok) {
+          setIsLoggedIn(true);
+          try {
+            const host = window.location.hostname;
+            const parts = host.split('.');
+            const domainAttr =
+              parts.length > 2
+                ? '; domain=.' + parts.slice(-2).join('.')
+                : '';
+            const secureAttr =
+              window.location.protocol === 'https:' ? '; Secure' : '';
+            document.cookie = `hp_logged_in=1; path=/; max-age=31536000; SameSite=Lax${domainAttr}${secureAttr}`;
+          } catch (e) {}
+
+          if (window.location.pathname === '/') {
+            window.location.replace('/launches');
+          }
+        } else if (res.status === 401 || res.status === 403) {
+          setIsLoggedIn(false);
+          try {
+            const host = window.location.hostname;
+            const parts = host.split('.');
+            const domainAttr =
+              parts.length > 2
+                ? '; domain=.' + parts.slice(-2).join('.')
+                : '';
+            document.cookie = `hp_logged_in=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT${domainAttr}`;
+          } catch (e) {}
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return (
+    <header className="hp-site-nav sticky top-0 z-[9999] w-full bg-hp-bg/90 backdrop-blur border-b border-hp-border">
+      <nav className="mx-auto flex h-[68px] w-full max-w-[1280px] items-center justify-between px-5 sm:px-10">
+        {/* prefetch={false} like every other link in this nav: on the homepage this
+            one prefetched the page already open, three RSC requests (~38KB)
+            parsed on the main thread right after load. */}
+        <Link href="/" prefetch={false} aria-label="Hookpost home" className="flex items-center gap-2.5">
+          {/* Explicit dimensions: without them this is an unsized image and the
+              logo can shift the header as it decodes. */}
+          <img
+            /* brand-logo.png is 512x512 / 89KB and renders at 36px here - the
+               header was paying 89KB for a 36px mark. The full-size file stays
+               for the Organization schema logo, which wants >=112px. */
+            src="/brand-logo-96.webp"
+            /* Decorative: the word "Hookpost" sits next to it in the wordmark,
+               and the link already carries aria-label="Hookpost home". A screen
+               reader would otherwise announce the name three times. */
+            alt=""
+            width={36}
+            height={36}
+            fetchPriority="high"
+            className="h-8 w-auto max-h-[36px] object-contain"
+          />
+          <span className="font-extrabold text-xl tracking-tight">Hookpost</span>
+        </Link>
+
+        {/*
+          /agent, /news and /blog used to sit in this nav. None of them exists —
+          all three 307 to /auth, so a visitor clicking "Blog" landed on a login
+          form. They are gone until there is something behind them.
+        */}
+        <ul className="hidden items-center gap-9 lg:flex text-[15px]">
+          {LINKS.map(([label, href]) => (
+            <li key={href} className={hideInTwa(href)}>
+              {href.startsWith('#') ? (
+                <a href={href} className="hover:text-hp-primary-text transition-colors">
+                  {label}
+                </a>
+              ) : href.startsWith('http') ? (
+                // Leaves the site, so it needs target and rel - next/link would
+                // render it but would not add either.
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 hover:text-hp-primary-text transition-colors"
+                >
+                  {label}
+                  <svg
+                    aria-hidden="true"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="opacity-70"
+                  >
+                    <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7 0-.7 0-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.7.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z" />
+                  </svg>
+                </a>
+              ) : (
+                <Link href={href} prefetch={false} className="hover:text-hp-primary-text transition-colors">
+                  {label}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <div className="hidden items-center gap-4 lg:flex">
+          {isLoggedIn ? (
+            <Link
+              href="/launches"
+              prefetch={false}
+              className="rounded-full bg-hp-primary px-5 py-2.5 text-[15px] font-semibold text-hp-on-primary transition-opacity hover:opacity-90 inline-flex items-center gap-1.5"
+            >
+              <span>Go to App</span>
+              <svg
+                aria-hidden="true"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
+          ) : (
+            <>
+              <Link href="/auth/login" prefetch={false} className="text-[15px] hover:text-hp-primary-text transition-colors">
+                Log in
+              </Link>
+              <Link
+                href="/auth"
+                prefetch={false}
+                className="rounded-full bg-hp-primary px-5 py-2.5 text-[15px] font-semibold text-hp-on-primary transition-opacity hover:opacity-90"
+              >
+                {ctaLabel}
+              </Link>
+            </>
+          )}
+        </div>
+
+        <button
+          type="button"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="lg:hidden rounded-md p-2 text-hp-text focus:outline-none focus-visible:ring-2 focus-visible:ring-hp-primary"
+        >
+          <span className="block h-0.5 w-6 bg-white mb-1.5" />
+          <span className="block h-0.5 w-6 bg-white mb-1.5" />
+          <span className="block h-0.5 w-6 bg-white" />
+        </button>
+      </nav>
+
+      {open && (
+        <div className="lg:hidden border-t border-hp-border bg-hp-bg px-5 pb-5 pt-3">
+          <ul className="flex flex-col gap-1 text-[15px]">
+            {isLoggedIn && (
+              <li>
+                <Link
+                  href="/launches"
+                  prefetch={false}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 font-bold text-hp-primary-text hover:bg-white/5"
+                >
+                  Go to App &rarr;
+                </Link>
+              </li>
+            )}
+            {[...LINKS, ...(!isLoggedIn ? [['Log in', '/auth/login'] as [string, string]] : [])].map(([label, href]) => (
+              <li key={href} className={hideInTwa(href)}>
+                {/*
+                  Same LINKS array as the desktop nav, so it has to handle an
+                  external href too - otherwise an external entry opens in the
+                  same tab on a phone and drops rel="noopener".
+                */}
+                {href.startsWith('http') ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-3 py-2.5 hover:bg-white/5"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <Link
+                    href={href}
+                    prefetch={false}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-3 py-2.5 hover:bg-white/5"
+                  >
+                    {label}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+          {isLoggedIn ? (
+            <Link
+              href="/launches"
+              prefetch={false}
+              onClick={() => setOpen(false)}
+              className="mt-3 block rounded-full bg-hp-primary px-5 py-3 text-center font-semibold text-hp-on-primary"
+            >
+              Go to App &rarr;
+            </Link>
+          ) : (
+            <Link
+              href="/auth"
+              prefetch={false}
+              onClick={() => setOpen(false)}
+              className="mt-3 block rounded-full bg-hp-primary px-5 py-3 text-center font-semibold text-hp-on-primary"
+            >
+              {ctaLabel}
+            </Link>
+          )}
+        </div>
+      )}
+    </header>
+  );
+};

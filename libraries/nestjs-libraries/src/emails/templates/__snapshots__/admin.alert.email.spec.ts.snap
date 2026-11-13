@@ -1,0 +1,878 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`every owner sale alert renders in the branded template AUTO_REFUNDED 1`] = `
+{
+  "subject": "Charged after cancel, refunded automatically: Standard monthly, ₹599 · Priya Shah",
+  "text": "Charged after cancel, refunded automatically: Standard monthly, ₹599
+
+Money taken after the plan was cancelled was refunded in full automatically. Nothing to do.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template BILLING_MISMATCH 1`] = `
+{
+  "subject": "Billing mismatch: Standard monthly, ₹599 · Priya Shah",
+  "text": "Billing mismatch: Standard monthly, ₹599
+Needs a look
+
+Hookpost and Razorpay disagree about this subscription, and the guard will not change it by itself.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template CANCEL_REQUESTED 1`] = `
+{
+  "subject": "Cancellation requested: Standard monthly, ₹599 · Priya Shah",
+  "text": "Cancellation requested: Standard monthly, ₹599
+
+Priya Shah pressed Cancel in Billing.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template CANCELLED 1`] = `
+{
+  "subject": "Subscription cancelled: Standard monthly, ₹599 · Priya Shah",
+  "text": "Subscription cancelled: Standard monthly, ₹599
+
+Razorpay reports Priya Shah's subscription as cancelled.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template CHARGE_STOPPED 1`] = `
+{
+  "subject": "Correction: charging stopped: Standard monthly, ₹599 · Priya Shah",
+  "text": "Correction: charging stopped: Standard monthly, ₹599
+
+A Razorpay billing event for Priya Shah.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template CHARGED_AFTER_CANCEL 1`] = `
+{
+  "subject": "Charged after cancel, refund failed: Standard monthly, ₹599 · Priya Shah",
+  "text": "Charged after cancel, refund failed: Standard monthly, ₹599
+Needs a look
+
+Money was taken after the plan was cancelled, and the automatic refund did not go through.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template DISPUTE 1`] = `
+{
+  "subject": "Payment dispute: Standard monthly, ₹599 · Priya Shah",
+  "text": "Payment dispute: Standard monthly, ₹599
+Needs a look
+
+Priya Shah's bank raised a dispute on a payment.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Razorpay dispute: disp_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Dispute in Razorpay: https://dashboard.razorpay.com/app/disputes/disp_sample
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template DISPUTE_CLEARED 1`] = `
+{
+  "subject": "Payment dispute cleared: Standard monthly, ₹599 · Priya Shah",
+  "text": "Payment dispute cleared: Standard monthly, ₹599
+
+A super admin let this workspace buy again after a dispute.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template DISPUTE_RESTORED 1`] = `
+{
+  "subject": "Plan restored after a dispute: Standard monthly, ₹599 · Priya Shah",
+  "text": "Plan restored after a dispute: Standard monthly, ₹599
+
+A super admin gave this workspace its plan back after a dispute.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template DUPLICATE_CHARGE_REFUNDED 1`] = `
+{
+  "subject": "Correction: duplicate charge refunded: Standard monthly, ₹599 · Priya Shah",
+  "text": "Correction: duplicate charge refunded: Standard monthly, ₹599
+
+A Razorpay billing event for Priya Shah.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template FIRST_CHARGE 1`] = `
+{
+  "subject": "First charge: Standard monthly, ₹599 · Priya Shah",
+  "text": "First charge: Standard monthly, ₹599
+
+Priya Shah paid for Standard monthly for the first time.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template GUARD_CANCEL_FAILED 1`] = `
+{
+  "subject": "Pre-charge guard could not cancel: Standard monthly, ₹599 · Priya Shah",
+  "text": "Pre-charge guard could not cancel: Standard monthly, ₹599
+Needs a look
+
+The pre-charge guard tried to cancel this subscription at Razorpay and Razorpay refused, so it can still be charged.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template GUARD_CANCELLED 1`] = `
+{
+  "subject": "Cancelled by the pre-charge guard: Standard monthly, ₹599 · Priya Shah",
+  "text": "Cancelled by the pre-charge guard: Standard monthly, ₹599
+
+The pre-charge guard cancelled this subscription at Razorpay, because Hookpost says the plan has ended.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template GUMROAD_CHANGED 1`] = `
+{
+  "subject": "Gumroad membership changed: Standard monthly, $29 · Priya Shah",
+  "text": "Gumroad membership changed: Standard monthly, $29
+
+Gumroad reports a change to Priya Shah's membership.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: $29
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Gumroad sale: sale_sample
+Gumroad license: lic_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template GUMROAD_REDEEMED 1`] = `
+{
+  "subject": "Gumroad license redeemed: Standard monthly, $29 · Priya Shah",
+  "text": "Gumroad license redeemed: Standard monthly, $29
+
+Priya Shah redeemed a Gumroad license.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: $29
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Gumroad sale: sale_sample
+Gumroad license: lic_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template HALTED 1`] = `
+{
+  "subject": "Renewal paused: Standard monthly, ₹599 · Priya Shah",
+  "text": "Renewal paused: Standard monthly, ₹599
+
+Razorpay stopped retrying Priya Shah's renewal, so the renewal is paused.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template NEW_MANDATE 1`] = `
+{
+  "subject": "New mandate on the same plan: Standard monthly, ₹599 · Priya Shah",
+  "text": "New mandate on the same plan: Standard monthly, ₹599
+
+Priya Shah set up a new mandate on the same plan (Standard monthly).
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template NEW_PLAN_CHARGE 1`] = `
+{
+  "subject": "Charged on a new plan: Standard monthly, ₹599 · Priya Shah",
+  "text": "Charged on a new plan: Standard monthly, ₹599
+
+Priya Shah was charged for Standard monthly on a new mandate.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template PAYMENT_FAILING 1`] = `
+{
+  "subject": "Payment failing: Standard monthly, ₹599 · Priya Shah",
+  "text": "Payment failing: Standard monthly, ₹599
+
+A charge for Priya Shah's Standard monthly failed. Razorpay is retrying it.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template PLAN_CHANGED 1`] = `
+{
+  "subject": "Plan changed: Standard monthly → Pro monthly, ₹599 · Priya Shah",
+  "text": "Plan changed: Standard monthly → Pro monthly, ₹599
+
+Priya Shah moved from Standard monthly to Pro monthly.
+
+- A note written by Hookpost
+
+Plan: Standard monthly → Pro monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template PLAN_CORRECTED_ENDED 1`] = `
+{
+  "subject": "Correction: plan ended: Standard monthly, ₹599 · Priya Shah",
+  "text": "Correction: plan ended: Standard monthly, ₹599
+
+A Razorpay billing event for Priya Shah.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template PLAN_RESTORED 1`] = `
+{
+  "subject": "Correction: plan restored: Standard monthly, ₹599 · Priya Shah",
+  "text": "Correction: plan restored: Standard monthly, ₹599
+
+A Razorpay billing event for Priya Shah.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template REFUND 1`] = `
+{
+  "subject": "Refund: Standard monthly, ₹599 · Priya Shah",
+  "text": "Refund: Standard monthly, ₹599
+
+A refund was issued to Priya Shah.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Razorpay refund: rfnd_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template REFUND_ENDED_PLAN 1`] = `
+{
+  "subject": "Correction: refunded plan ended: Standard monthly, ₹599 · Priya Shah",
+  "text": "Correction: refunded plan ended: Standard monthly, ₹599
+
+A Razorpay billing event for Priya Shah.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template RENEWAL 1`] = `
+{
+  "subject": "Renewal charged: Standard monthly, ₹599 · Priya Shah",
+  "text": "Renewal charged: Standard monthly, ₹599
+
+Priya Shah's Standard monthly renewed and the payment went through.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template TRIAL_STARTED 1`] = `
+{
+  "subject": "Trial started: Standard monthly, ₹599 · Priya Shah",
+  "text": "Trial started: Standard monthly, ₹599
+
+Priya Shah approved a mandate for Standard monthly. Nothing has been charged yet.
+
+- A note written by Hookpost
+
+Plan: Standard monthly
+Amount: ₹599
+Payment method: UPI
+Customer: Priya Shah
+Email: priya@chaipoint.in
+Workspace: Chai Point Social
+Signed up: 20 Oct 2026
+Signup country: IN
+Signup source: utm_source=meta, utm_campaign=reel-oct, signup=google
+Razorpay payment: pay_sample
+Razorpay subscription: sub_sample
+Workspace id: org-sample-0001
+
+Open in admin: https://hookpost.hookstep.in/admin/users?q=org-sample-0001
+Subscription in Razorpay: https://dashboard.razorpay.com/app/subscriptions/sub_sample
+
+Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.
+",
+}
+`;
+
+exports[`every owner sale alert renders in the branded template the HTML of one alert (renewal paused) 1`] = `
+"<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="x-apple-disable-message-reformatting" />
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+<meta name="color-scheme" content="light" />
+<meta name="supported-color-schemes" content="light" />
+<title>Renewal paused: Standard monthly, ₹599 · Priya Shah</title>
+<!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
+</head>
+<body style="margin:0;padding:0;width:100%;background-color:#EFF5F4;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+<!--hookpost-email-layout-->
+<!--hp:preheader--><div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;color:#EFF5F4;">Razorpay stopped retrying Priya Shah&#39;s renewal, so the renewal is paused.&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div><!--/hp:preheader-->
+<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#EFF5F4" style="background-color:#EFF5F4;">
+<tr><td align="center" style="padding:32px 12px;">
+<!--[if mso]><table role="presentation" width="600" align="center" border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;">
+<tr><td align="left" style="padding:0 4px 20px 4px;">
+<a data-hp-brand href="https://hookpost.hookstep.in" style="text-decoration:none;display:inline-block;">
+<img src="https://hookpost.hookstep.in/brand-logo-96.png" width="36" height="36" alt="Hookpost" style="display:inline-block;vertical-align:middle;width:36px;height:36px;border:0;outline:none;border-radius:8px;" /><span style="display:inline-block;vertical-align:middle;padding-left:10px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:17px;line-height:36px;font-weight:700;color:#0A1F1D;letter-spacing:-0.2px;">Hookpost</span>
+</a>
+</td></tr>
+<tr><td style="background-color:#FFFFFF;border:1px solid #D3E2E0;border-radius:12px;overflow:hidden;">
+<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr><td height="4" bgcolor="#00796C" style="height:4px;font-size:0;line-height:0;background-color:#00796C;background-image:linear-gradient(90deg, #00796C 0%, #2EE6CF 50%, #FF9A5C 100%);border-radius:12px 12px 0 0;">&nbsp;</td></tr>
+<tr><td style="padding:32px 32px 16px 32px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:15px;line-height:24px;color:#3A5552;">
+<h1 style="margin:0 0 10px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:20px;line-height:28px;font-weight:700;color:#0A1F1D;">Renewal paused: Standard monthly, ₹599</h1>
+<p style="margin:0 0 16px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:15px;line-height:24px;color:#3A5552;">Razorpay stopped retrying Priya Shah&#39;s renewal, so the renewal is paused.</p>
+<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:0 0 16px 0;"><tr>
+<td data-hp-marker valign="top" style="width:22px;padding:0 0 10px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:15px;line-height:24px;color:#00796C;font-weight:600;">&bull;</td>
+<td valign="top" style="padding:0 0 10px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:15px;line-height:24px;color:#3A5552;">A note written by Hookpost</td>
+</tr></table>
+<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:4px 0 24px 0;border:1px solid #D3E2E0;border-radius:8px;border-collapse:separate;background-color:#F7FAFA;"><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Plan</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">Standard monthly</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Amount</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">₹599</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Payment method</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">UPI</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Customer</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">Priya Shah</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Email</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top"><a href="mailto:priya@chaipoint.in" style="color:#00796C;text-decoration:underline;">priya@chaipoint.in</a></td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Workspace</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">Chai Point Social</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Signed up</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">20 Oct 2026</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Signup country</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">IN</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Signup source</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">utm_source=meta, utm_campaign=reel-oct, signup=google</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Razorpay payment</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">pay_sample</td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Razorpay subscription</td>
+<td style="padding:9px 14px;border-bottom:1px solid #D3E2E0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top"><a href="https://dashboard.razorpay.com/app/subscriptions/sub_sample" style="color:#00796C;text-decoration:underline;">sub_sample</a></td>
+</tr><tr>
+<td data-hp-label style="width:38%;padding:9px 14px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#566F6C;" valign="top">Workspace id</td>
+<td style="padding:9px 14px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#0A1F1D;font-weight:600;word-break:break-word;overflow-wrap:anywhere;" valign="top">org-sample-0001</td>
+</tr></table>
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:8px 0 24px 0;border-collapse:separate;">
+<tr><td align="center" bgcolor="#00796C" style="border-radius:8px;background-color:#00796C;mso-padding-alt:13px 28px;">
+<a data-hp-button href="https://hookpost.hookstep.in/admin/users?q=org-sample-0001" target="_blank" style="display:inline-block;padding:13px 28px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:15px;line-height:20px;font-weight:600;color:#FFFFFF;text-decoration:none;border-radius:8px;">Open in admin</a>
+</td></tr></table>
+<p style="margin:0 0 16px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:13px;line-height:20px;color:#3A5552;"><a href="https://dashboard.razorpay.com/app/subscriptions/sub_sample" style="color:#00796C;text-decoration:underline;">Subscription in Razorpay</a></p>
+</td></tr>
+</table>
+</td></tr>
+<tr><td align="center" style="padding:24px 24px 8px 24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:12px;line-height:18px;color:#566F6C;">
+<p style="margin:0 0 6px 0;">Hookpost by Hookstep · Ghatkopar, Mumbai, India</p>
+<p style="margin:0 0 6px 0;"><a href="mailto:support@hookstep.in" style="color:#566F6C;text-decoration:underline;">support@hookstep.in</a></p>
+<p style="margin:0;color:#566F6C;">Sent to the owner alert address (OWNER_SALES_ALERT_EMAIL). The customer gets their own email separately.</p>
+</td></tr>
+</table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td></tr>
+</table>
+</body>
+</html>"
+`;

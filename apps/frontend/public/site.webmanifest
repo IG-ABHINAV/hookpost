@@ -1,0 +1,39 @@
+{
+  "name": "Hookpost: Social Media Planner",
+  "short_name": "Hookpost",
+  "description": "AI social media scheduler. Schedule and auto-publish reels, shorts and posts from one calendar.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#061416",
+  "theme_color": "#061416",
+  "orientation": "portrait-primary",
+  "categories": [
+    "business",
+    "productivity",
+    "social"
+  ],
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+# Local stack for the integration and E2E suites (tests/integration, tests/e2e).
+# Separate names and ports from docker-compose.dev.yaml so it never touches a
+# developer's own hookpost-postgres / hookpost-redis data.
+#
+#   docker compose -f tests/stack/docker-compose.test.yaml up -d --wait
+#   docker compose -f tests/stack/docker-compose.test.yaml down -v
+#
+# CI (.github/workflows/nightly-tests.yml) runs the same images as service
+# containers, on the same ports.
+name: hookpost-test
+
+services:
+  hookpost-test-postgres:
+    image: postgres:16
+    container_name: hookpost-test-postgres
+    environment:
+      POSTGRES_USER: hookpost
+      POSTGRES_PASSWORD: hookpost-test-password
+      POSTGRES_DB: hookpost_test
+    ports:
+      - '127.0.0.1:55432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U hookpost -d hookpost_test']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  hookpost-test-redis:
+    image: redis:7-alpine
+    container_name: hookpost-test-redis
+    ports:
+      - '127.0.0.1:56379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # Temporal with SQL visibility (no Elasticsearch), on the same Postgres.
+  # Only the backend's client talks to it: no worker runs in the test stack,
+  # so a scheduled post is recorded and its workflow started, never published.
+  hookpost-test-temporal:
+    image: temporalio/auto-setup:1.28.1
+    container_name: hookpost-test-temporal
+    depends_on:
+      hookpost-test-postgres:
+        condition: service_healthy
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=hookpost
+      - POSTGRES_PWD=hookpost-test-password
+      - POSTGRES_SEEDS=hookpost-test-postgres
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+    volumes:
+      - ../../dynamicconfig:/etc/temporal/config/dynamicconfig
+    ports:
+      - '127.0.0.1:57233:7233'
+    healthcheck:
+      test: ['CMD-SHELL', 'tctl --address hookpost-test-temporal:7233 cluster health | grep -q SERVING']
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 10s

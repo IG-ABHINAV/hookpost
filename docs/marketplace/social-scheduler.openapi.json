@@ -1,0 +1,1534 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hookpost Social Scheduler API",
+    "version": "1.0.0",
+    "description": "Schedule one post to many social networks in one call: LinkedIn, X, Threads, Facebook, Instagram, YouTube, Pinterest, Discord and Slack.\nConnect each account with a sign-in link (GET /connect/{provider}); upload media; create posts and threads; read their status.\n\nCredits: 1 per channel a post goes to; on X, 2 per tweet, or 20 per tweet that has a link (X charges more for those; links are refused unless link_policy is \"allow\"). Everything else costs 0. Each response reports what it used in X-Magicapi-Billing.\nThe 7-day trial: 10 credits, 1 channel, no X. Paid plans include X.",
+    "contact": {
+      "name": "Hookstep support",
+      "email": "support@hookstep.in",
+      "url": "https://hookpost.hookstep.in"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://hookpost.hookstep.in/api/mkt/v1/social"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Social Scheduler"
+    }
+  ],
+  "paths": {
+    "/providers": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "listProviders",
+        "summary": "Networks, limits and settings",
+        "description": "Every network this API posts to, with its character limit, media rules, credits and the settings it takes. Needs no connected account. 0 credits.",
+        "responses": {
+          "200": {
+            "description": "The networks.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "providers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "identifier": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "max_chars": {
+                            "type": "integer"
+                          },
+                          "counting": {
+                            "type": "string"
+                          },
+                          "media": {
+                            "type": [
+                              "object",
+                              "null"
+                            ]
+                          },
+                          "connect": {
+                            "type": "boolean"
+                          },
+                          "picks_page_after_login": {
+                            "type": "boolean"
+                          },
+                          "credits": {
+                            "type": "object"
+                          },
+                          "included_in_plan": {
+                            "type": "boolean"
+                          },
+                          "settings": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "description": "JSON Schema of the network's settings (channels[].settings)."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connect/{provider}": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "getConnectLinkForProvider",
+        "summary": "Get a link to connect an account",
+        "description": "Returns a sign-in link for your own account on the network. Open it in a browser; when it says \"connected\", the channel is in GET /channels. The link works once, for an hour, and acts like a password. 0 credits.",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "description": "A network from GET /providers, e.g. linkedin, x, threads.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reconnect",
+            "in": "query",
+            "required": false,
+            "description": "A channel id: connect that channel again (after needs_reconnect).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The link.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectLink"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Over a plan limit (credits, channels, storage, or a network the plan does not include). Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "The network did not answer.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channels": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "listChannels",
+        "summary": "List connected channels",
+        "description": "Your workspace's connected accounts. 0 credits.",
+        "responses": {
+          "200": {
+            "description": "The channels.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelList"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channels/{id}": {
+      "delete": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "deleteChannel",
+        "summary": "Disconnect a channel",
+        "description": "Removes the channel and its posts that have not published. Frees a channel slot. 0 credits.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Channel id from GET /channels.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Removed.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Deleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media": {
+      "post": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "uploadMedia",
+        "summary": "Upload an image or video",
+        "description": "Stores a file in your workspace for posts (media_ids). 0 credits; counts toward your plan's storage. Media is removed 45 days after upload.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaUpload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stored.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Media"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Over a plan limit (credits, channels, storage, or a network the plan does not include). Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "File too large.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/from-url": {
+      "post": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "uploadMediaFromUrl",
+        "summary": "Upload media from a URL",
+        "description": "Fetches a public image or video into your workspace. 0 credits; counts toward storage.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaFromUrl"
+              },
+              "example": {
+                "url": "https://example.com/photo.jpg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stored.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Media"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Over a plan limit (credits, channels, storage, or a network the plan does not include). Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "File too large.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "listPosts",
+        "summary": "List posts in a time range",
+        "description": "Posts publishing between from and to (at most 92 days; default: the last 7 and next 35 days). 0 credits.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "ISO 8601 start.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "description": "ISO 8601 end.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The posts.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "channel_id": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "provider": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "publish_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "url": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "createPost",
+        "summary": "Schedule a post on one or more channels",
+        "description": "The same content goes to every channel; content[0] is the post and content[1..] its thread replies (X tweets, Threads replies). Credits: 1 per channel, X 2 per tweet or 20 per tweet with a link. Held when accepted and not returned on cancel.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialPost"
+              },
+              "example": {
+                "channels": [
+                  {
+                    "id": "clx123channel"
+                  },
+                  {
+                    "id": "clx456channel",
+                    "settings": {
+                      "who_can_reply_post": "everyone"
+                    }
+                  }
+                ],
+                "content": [
+                  {
+                    "text": "We shipped a new release today.",
+                    "media_ids": []
+                  }
+                ],
+                "schedule_at": "2026-11-02T09:30:00Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Accepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Over a plan limit (credits, channels, storage, or a network the plan does not include). Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicts with the current state (already published, duplicate post, same call still running).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Paused or at capacity. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/validate": {
+      "post": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "validatePost",
+        "summary": "Check and price a post without saving it",
+        "description": "Runs every check POST /posts runs and returns the credits it would cost. Saves nothing. 0 credits.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Valid; what it would cost.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "credits": {
+                      "type": "integer"
+                    },
+                    "channels": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Over a plan limit (credits, channels, storage, or a network the plan does not include). Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "getPost",
+        "summary": "Status of a post",
+        "description": "scheduled, published (with its URL) or error (with the reason). 0 credits.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id from the post you created.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The status.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostStatus"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "deletePost",
+        "summary": "Cancel a post before it publishes",
+        "description": "Cancels it on its channel. Credits are not returned once a post is accepted. A published post can only be deleted on the network. 0 credits.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id from the post you created.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cancelled.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Deleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicts with the current state (already published, duplicate post, same call still running).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/slots/{channel_id}": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "findSlot",
+        "summary": "Next open time slot of a channel",
+        "description": "The next of the channel's posting times that has no post yet. 0 credits.",
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "description": "Channel id.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The slot.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channel_id": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such channel, post or media in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "listNotifications",
+        "summary": "Workspace notifications",
+        "description": "Publishing errors and notices of your workspace, newest first, 100 a page. 0 credits.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page, from 0.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The notifications.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notifications": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    },
+                    "has_more": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usage": {
+      "get": {
+        "tags": [
+          "Social Scheduler"
+        ],
+        "operationId": "getUsage",
+        "summary": "Credits, channels and storage used",
+        "description": "Our own counters for the current 28-day window, which starts at your first call and need not match api.market's month. api.market's dashboard is the billing record. 0 credits.",
+        "responses": {
+          "200": {
+            "description": "Usage.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usage"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error",
+          "message"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "A stable code, e.g. quota_exceeded, channel_not_found, invalid_thread.",
+            "example": "quota_exceeded"
+          },
+          "message": {
+            "description": "What went wrong, for a person.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "channel_id": {
+            "type": "string"
+          },
+          "post_id": {
+            "type": "string"
+          },
+          "media_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ConnectLink": {
+        "type": "object",
+        "required": [
+          "provider",
+          "url",
+          "expires_in"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "example": "linkedin"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Open this in a browser and sign in to your own account. Treat it like a password: anyone who opens it within the hour connects their account to your workspace."
+          },
+          "expires_in": {
+            "type": "integer",
+            "example": 3600
+          }
+        }
+      },
+      "Channel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string",
+            "example": "x"
+          },
+          "name": {
+            "type": "string"
+          },
+          "picture": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "profile": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "disabled": {
+            "type": "boolean"
+          },
+          "needs_reconnect": {
+            "type": "boolean",
+            "description": "The network refused the token; connect again with ?reconnect=<id>."
+          },
+          "pending_page_pick": {
+            "type": "boolean",
+            "description": "Login done but no page or account picked yet."
+          }
+        }
+      },
+      "ChannelList": {
+        "type": "object",
+        "properties": {
+          "channels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Channel"
+            }
+          },
+          "included": {
+            "type": "integer",
+            "description": "Channels your plan includes."
+          }
+        }
+      },
+      "Deleted": {
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean",
+            "example": true
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "Media": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "bytes": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video"
+            ]
+          }
+        }
+      },
+      "MediaUpload": {
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "JPEG, PNG, GIF or WebP up to 10 MB, or MP4 up to 200 MB (files over 95 MB: use /media/from-url)."
+          }
+        }
+      },
+      "MediaFromUrl": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "A public http(s) URL of the image or video."
+          }
+        }
+      },
+      "AcceptedPost": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Use it with GET and DELETE."
+          },
+          "channel_id": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scheduled",
+              "queued",
+              "draft"
+            ]
+          },
+          "publish_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "credits": {
+            "type": "integer"
+          }
+        }
+      },
+      "Accepted": {
+        "type": "object",
+        "properties": {
+          "posts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcceptedPost"
+            }
+          },
+          "credits_charged": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostItemStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scheduled",
+              "published",
+              "error",
+              "draft"
+            ]
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The live post, once published."
+          },
+          "error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "PostStatus": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PostItemStatus"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "provider": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "publish_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "replies": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PostItemStatus"
+                },
+                "description": "Thread replies, in order."
+              }
+            }
+          }
+        ]
+      },
+      "Usage": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "plan": {
+            "type": "string"
+          },
+          "plan_name": {
+            "type": "string"
+          },
+          "window_start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "window_end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "credits_included": {
+            "type": "integer"
+          },
+          "credits_used": {
+            "type": "integer"
+          },
+          "channels_included": {
+            "type": "integer"
+          },
+          "channels_used": {
+            "type": "integer"
+          },
+          "storage_included_bytes": {
+            "type": "integer"
+          },
+          "storage_used_bytes": {
+            "type": "integer"
+          },
+          "schedule_horizon_days": {
+            "type": "integer"
+          },
+          "x_included": {
+            "type": "boolean"
+          },
+          "x_links_included": {
+            "type": "boolean"
+          },
+          "thread_cap": {
+            "type": "integer"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "SocialPost": {
+        "type": "object",
+        "required": [
+          "channels",
+          "content",
+          "schedule_at"
+        ],
+        "properties": {
+          "channels": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Channel id from GET /channels."
+                },
+                "settings": {
+                  "type": "object",
+                  "description": "The network's settings (GET /providers lists each one's schema), e.g. Pinterest board, YouTube title. Discord: channel is the id of a channel in the server you connected; any other is refused (400 channel_not_in_server)."
+                }
+              }
+            }
+          },
+          "content": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 25,
+            "items": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "Plain text, posted as typed."
+                },
+                "media_ids": {
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "schedule_at": {
+            "type": "string",
+            "description": "When to publish: an ISO 8601 time with a zone (\"2026-11-02T09:30:00Z\"), \"now\", or \"draft\". Trials schedule up to 7 days ahead, paid plans up to 35.",
+            "example": "2026-11-02T09:30:00Z"
+          },
+          "link_policy": {
+            "type": "string",
+            "enum": [
+              "reject",
+              "allow"
+            ],
+            "default": "reject",
+            "description": "X only. \"reject\" (the default) refuses a tweet with a link with a 400, so you are never charged by surprise. \"allow\" posts it at 20 credits a tweet (X charges more for posts with links)."
+          }
+        }
+      }
+    }
+  }
+}

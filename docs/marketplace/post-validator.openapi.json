@@ -1,0 +1,411 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Social Post Validator API",
+    "version": "1.0.0",
+    "description": "Check a draft against each social network's rules before you post it: character limits counted the way each network counts them, media counts and types, and upload sizes.\nNothing to connect, nothing is posted, no network is called.\n\nCredits: 1 per check (any number of networks). GET /rules costs 0. Each response reports what it used in X-Magicapi-Billing.",
+    "contact": {
+      "name": "Hookstep support",
+      "email": "support@hookstep.in",
+      "url": "https://hookpost.hookstep.in"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://hookpost.hookstep.in/api/mkt/v1/validate"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Validator"
+    }
+  ],
+  "paths": {
+    "/check": {
+      "post": {
+        "tags": [
+          "Validator"
+        ],
+        "operationId": "checkDraft",
+        "summary": "Check a draft for several networks",
+        "description": "1 credit.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidatorCheck"
+              },
+              "example": {
+                "text": "Our spring collection is live.",
+                "media": [
+                  {
+                    "type": "image",
+                    "bytes": 820000,
+                    "width": 1080,
+                    "height": 1350
+                  }
+                ],
+                "platforms": [
+                  "x",
+                  "instagram",
+                  "linkedin"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pass or fail per network.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "True when every network passed."
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "platform": {
+                            "type": "string"
+                          },
+                          "valid": {
+                            "type": "boolean"
+                          },
+                          "chars": {
+                            "type": "integer"
+                          },
+                          "limit": {
+                            "type": "integer"
+                          },
+                          "errors": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "warnings": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is not valid. Nothing was done or billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Over a plan limit (credits, channels, storage, or a network the plan does not include). Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rules": {
+      "get": {
+        "tags": [
+          "Validator"
+        ],
+        "operationId": "listRules",
+        "summary": "The rules checked, per network",
+        "description": "0 credits.",
+        "responses": {
+          "200": {
+            "description": "The rules.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "platforms": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usage": {
+      "get": {
+        "tags": [
+          "Validator"
+        ],
+        "operationId": "getUsage",
+        "summary": "Credits, channels and storage used",
+        "description": "Our own counters for the current 28-day window, which starts at your first call and need not match api.market's month. api.market's dashboard is the billing record. 0 credits.",
+        "responses": {
+          "200": {
+            "description": "Usage.",
+            "headers": {
+              "X-Magicapi-Billing": {
+                "description": "Credits this call used, as api.market bills them (API=N;). Reads are API=0;.",
+                "schema": {
+                  "type": "string",
+                  "example": "API=1;"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usage"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many calls, or a daily network limit. Not billed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error",
+          "message"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "A stable code, e.g. quota_exceeded, channel_not_found, invalid_thread.",
+            "example": "quota_exceeded"
+          },
+          "message": {
+            "description": "What went wrong, for a person.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "channel_id": {
+            "type": "string"
+          },
+          "post_id": {
+            "type": "string"
+          },
+          "media_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Usage": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "plan": {
+            "type": "string"
+          },
+          "plan_name": {
+            "type": "string"
+          },
+          "window_start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "window_end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "credits_included": {
+            "type": "integer"
+          },
+          "credits_used": {
+            "type": "integer"
+          },
+          "channels_included": {
+            "type": "integer"
+          },
+          "channels_used": {
+            "type": "integer"
+          },
+          "storage_included_bytes": {
+            "type": "integer"
+          },
+          "storage_used_bytes": {
+            "type": "integer"
+          },
+          "schedule_horizon_days": {
+            "type": "integer"
+          },
+          "x_included": {
+            "type": "boolean"
+          },
+          "x_links_included": {
+            "type": "boolean"
+          },
+          "thread_cap": {
+            "type": "integer"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "ValidatorCheck": {
+        "type": "object",
+        "required": [
+          "text",
+          "platforms"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "media": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "image",
+                    "video"
+                  ]
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "duration_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "has_cover": {
+                  "type": "boolean",
+                  "description": "A video with a cover image set on it (Pinterest)."
+                }
+              }
+            }
+          },
+          "platforms": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "x",
+                "linkedin",
+                "threads",
+                "facebook",
+                "instagram",
+                "youtube",
+                "pinterest",
+                "discord",
+                "slack",
+                "bluesky",
+                "mastodon"
+              ]
+            }
+          },
+          "x_premium": {
+            "type": "boolean",
+            "description": "Count X at 4,000 characters."
+          }
+        }
+      }
+    }
+  }
+}

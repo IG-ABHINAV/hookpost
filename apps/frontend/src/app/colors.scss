@@ -1,0 +1,248 @@
+// App colour variables. The brand values are NOT here: every brand, surface
+// and text colour reads a --hp-* token from the active brand theme
+// (libraries/helpers/src/brand/brand-themes.ts, rendered by BrandThemeStyle in
+// each root layout). Switch themes with NEXT_PUBLIC_BRAND_THEME, never by
+// editing hex here. What is still hex below is neutral or a social network's
+// own colour (the post previews imitate LinkedIn, Facebook, YouTube...).
+:root {
+  .dark {
+    --new-back-drop: var(--hp-bg);
+    --new-settings: var(--hp-elevated);
+    --new-border: var(--hp-border);
+    --new-bgColor: var(--hp-bg);
+    --new-bgColorInner: var(--hp-surface);
+    --new-sep: var(--hp-border-strong);
+    --new-bgLineColor: var(--hp-border);
+    --new-textItemFocused: var(--hp-primary-text);
+    --new-textItemBlur: var(--hp-text-3);
+    --new-boxFocused: color-mix(in srgb, var(--hp-primary) 16%, var(--hp-surface));
+    --new-textColor: var(--hp-text-rgb);
+    --new-blockSeparator: var(--hp-border);
+    --new-btn-simple: var(--hp-elevated);
+    --new-btn-text: var(--hp-text);
+    --new-btn-primary: var(--hp-primary);
+    --new-ai-btn: var(--hp-accent);
+    --new-box-hover: var(--hp-elevated);
+    --new-table-border: var(--hp-border);
+    --new-table-header: var(--hp-elevated);
+    --new-table-text: var(--hp-text-3);
+    --new-table-text-focused: var(--hp-primary-text);
+    --new-small-strips: var(--hp-surface);
+    --new-big-strips: var(--hp-surface);
+    --new-col-color: var(--hp-border);
+    --new-menu-dots: var(--hp-text-3);
+    --new-menu-hover: var(--hp-text);
+    --menu-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.5);
+    --popup-color: color-mix(in srgb, var(--hp-elevated) 30%, transparent);
+    --border-preview: transparent;
+    --preview-box-shadow: none;
+    --linkedin-border: #2e3438;
+    --linkedin-bg: #1b1f23;
+    --linkedin-text: #c6c7c8;
+    --facebook-bg: #242526;
+    --facebook-bg-comment: #333334;
+    --instagram-bg: #0b1014;
+    --tiktok-item-bg: #2a2a2a;
+    --tiktok-item-icon-bg: #FFF;
+    --youtube-bg: #0F0F0F;
+    --youtube-button: #F1F1F1;
+    --youtube-action-color: #272727;
+    --youtube-svg-border: #A0A0A0;
+    --new-wordmark-accent: var(--hp-primary-text);
+  }
+  .light {
+    --new-back-drop: var(--hp-text);
+    --new-settings: var(--hp-elevated);
+    --new-sep: var(--hp-border-strong);
+    --new-border: var(--hp-border);
+    --new-bgColor: var(--hp-bg);
+    --new-bgColorInner: var(--hp-surface);
+    --new-bgLineColor: var(--hp-border);
+    --new-textItemFocused: var(--hp-primary-text);
+    --new-textItemBlur: var(--hp-text-3);
+    --new-boxFocused: color-mix(in srgb, var(--hp-primary) 12%, var(--hp-surface));
+    --new-textColor: var(--hp-text-rgb);
+    --new-blockSeparator: var(--hp-border);
+    --new-btn-simple: var(--hp-elevated);
+    --new-btn-text: var(--hp-text);
+    --new-btn-primary: var(--hp-primary);
+    --new-ai-btn: var(--hp-accent);
+    --new-box-hover: var(--hp-elevated);
+    --new-table-border: var(--hp-border);
+    --new-table-header: var(--hp-elevated);
+    --new-table-text: var(--hp-text-3);
+    --new-table-text-focused: var(--hp-primary-text);
+    --new-small-strips: #191818;
+    --new-big-strips: var(--hp-elevated);
+    --new-col-color: var(--hp-border);
+    --new-menu-dots: var(--hp-text-3);
+    --new-menu-hover: var(--hp-text);
+    --menu-shadow: -22px 83px 24px 0 rgba(55, 52, 75, 0),
+      -14px 53px 22px 0 rgba(55, 52, 75, 0.01),
+      -8px 30px 19px 0 rgba(55, 52, 75, 0.05),
+      -3px 13px 14px 0 rgba(55, 52, 75, 0.09),
+      -1px 3px 8px 0 rgba(55, 52, 75, 0.1);
+    --popup-color: color-mix(in srgb, var(--hp-text) 20%, transparent);
+    --border-preview: #f1f0f3;
+    --preview-box-shadow: 0 386px 108px 0 rgba(38, 32, 64, 0),
+      0 247px 99px 0 rgba(38, 32, 64, 0.01),
+      0 139px 83px 0 rgba(38, 32, 64, 0.03),
+      0 62px 62px 0 rgba(38, 32, 64, 0.04), 0 15px 34px 0 rgba(38, 32, 64, 0.05);
+    --linkedin-border: #e9e5df;
+    --linkedin-bg: #fff;
+    --linkedin-text: #707070;
+    --facebook-bg: #fff;
+    --facebook-bg-comment: #f6f6f6;
+    --instagram-bg: #fff;
+    --tiktok-item-bg: #EEF1F0;
+    --tiktok-item-icon-bg: #454645;
+    --youtube-bg: #FFF;
+    --youtube-button: #000;
+    --youtube-action-color: #F1F1F1;
+    --youtube-svg-border: #1A1A1A;
+    --new-wordmark-accent: var(--hp-primary-text);
+  }
+}
+
+:root {
+  .dark {
+    --color-primary: var(--hp-bg);
+    --color-secondary: var(--hp-bg);
+    --color-text: var(--hp-text);
+    --color-third: var(--hp-bg);
+    --color-forth: var(--hp-primary);
+    --color-fifth: var(--new-bgLineColor);
+    --color-sixth: var(--new-table-header);
+    --color-seventh: var(--hp-primary-hover);
+    --color-gray: #8c8c8c;
+    --color-input: var(--new-table-header);
+    --color-input-text: #64748b;
+    --color-table-border: var(--new-table-border);
+    --color-custom1: #324264;
+    --color-custom2: var(--hp-elevated);
+    --color-custom3: var(--hp-surface);
+    --color-custom4: var(--hp-primary);
+    --color-custom5: #e9e9f1;
+    --color-custom6: var(--new-bgLineColor);
+    --color-custom7: var(--hp-primary);
+    --color-custom8: var(--new-btn-simple);
+    --color-custom9: #354258;
+    --color-custom10: #e4b895;
+    --color-custom11: var(--hp-primary-text);
+    --color-custom12: color-mix(in srgb, var(--hp-primary-text) 45%, var(--hp-text));
+    --color-custom13: #ffac30;
+    --color-custom14: #576a9a;
+    --color-custom15: #0a0a0a;
+    --color-custom16: #121a2d;
+    --color-custom17: #d3d3d3;
+    --color-custom18: var(--hp-text-2);
+    --color-custom19: #f97066;
+    --color-custom20: #121b2c;
+    --color-custom21: #506490;
+    --color-custom22: #b91c1c;
+    --color-custom23: #000000;
+    --color-custom24: #eaff00;
+    --color-custom25: #2e3336;
+    --color-custom26: #1d9bf0;
+    --color-custom27: #71767b;
+    --color-custom28: var(--hp-primary-text);
+    --color-custom29: color-mix(in srgb, var(--hp-primary) 18%, var(--hp-bg));
+    --color-custom30: var(--hp-primary-active);
+    --color-custom31: #0f1727;
+    --color-custom32: #181818;
+    --color-custom33: #f2f2f2;
+    --color-custom34: #334155;
+    --color-custom35: #242424;
+    --color-custom36: #6b6b6b;
+    --color-custom37: #0b1416;
+    --color-custom38: #d9d9d9;
+    --color-custom39: #ffffff;
+    --color-custom40: #0e0e0e;
+    --color-custom41: color-mix(in srgb, var(--hp-primary-text) 40%, var(--hp-text));
+    --color-custom42: #32d583;
+    --color-custom43: #425379;
+    --color-custom44: #283450;
+    --color-custom45: var(--hp-primary);
+    --color-custom46: #658dac;
+    --color-custom47: #182034;
+    --color-custom48: #080b14;
+    --color-custom49: #0a0b14;
+    --color-custom50: color-mix(in srgb, var(--hp-primary) 25%, var(--hp-bg));
+    --color-custom51: var(--hp-primary);
+    --color-custom52: #eaeef2;
+    --color-custom53: #7c7d86;
+    --color-custom54: #afb8c1;
+    --color-custom55: var(--hp-border);
+    --color-modalCustom: #000000;
+  }
+  .light {
+    --color-primary: var(--hp-bg);
+    --color-secondary: var(--hp-surface);
+    --color-text: var(--hp-text);
+    --color-third: var(--hp-surface);
+    --color-forth: var(--hp-primary);
+    --color-fifth: var(--new-bgLineColor);
+    --color-sixth: var(--new-table-header);
+    --color-seventh: var(--hp-primary-hover);
+    --color-gray: #8c8c8c;
+    --color-input: var(--new-table-header);
+    --color-input-text: #64748b;
+    --color-table-border: #efefef;
+    --color-custom1: #324264;
+    --color-custom2: var(--hp-elevated);
+    --color-custom3: var(--hp-surface);
+    --color-custom4: var(--hp-primary);
+    --color-custom5: #e9e9f1;
+    --color-custom6: var(--new-bgLineColor);
+    --color-custom7: var(--hp-primary);
+    --color-custom8: var(--new-btn-simple);
+    --color-custom9: #354258;
+    --color-custom10: #e4b895;
+    --color-custom11: var(--hp-primary-text);
+    --color-custom12: color-mix(in srgb, var(--hp-primary-text) 45%, var(--hp-text));
+    --color-custom13: #ffac30;
+    --color-custom14: #576a9a;
+    --color-custom15: #0a0a0a;
+    --color-custom16: #121a2d;
+    --color-custom17: #000;
+    --color-custom18: var(--hp-text);
+    --color-custom19: #f97066;
+    --color-custom20: #f5f5f5;
+    --color-custom21: #506490;
+    --color-custom22: #b91c1c;
+    --color-custom23: #f5f5f5;
+    --color-custom24: #eaff00;
+    --color-custom25: #2e3336;
+    --color-custom26: #1d9bf0;
+    --color-custom27: #71767b;
+    --color-custom28: var(--hp-primary-text);
+    --color-custom29: color-mix(in srgb, var(--hp-primary) 18%, var(--hp-bg));
+    --color-custom30: #efefef;
+    --color-custom31: #e0e0e0;
+    --color-custom32: #181818;
+    --color-custom33: #f2f2f2;
+    --color-custom34: #334155;
+    --color-custom35: #242424;
+    --color-custom36: #6b6b6b;
+    --color-custom37: #0b1416;
+    --color-custom38: #d9d9d9;
+    --color-custom39: #000;
+    --color-custom40: #fff;
+    --color-custom41: color-mix(in srgb, var(--hp-primary-text) 40%, var(--hp-text));
+    --color-custom42: #32d583;
+    --color-custom43: #425379;
+    --color-custom44: #283450;
+    --color-custom45: var(--hp-primary);
+    --color-custom46: #658dac;
+    --color-custom47: #182034;
+    --color-custom48: #fff;
+    --color-custom49: #0a0b14;
+    --color-custom50: color-mix(in srgb, var(--hp-primary) 25%, var(--hp-bg));
+    --color-custom51: var(--hp-primary);
+    --color-custom52: #eaeef2;
+    --color-custom53: #7c7d86;
+    --color-custom54: #afb8c1;
+    --color-custom55: var(--hp-border);
+    --color-modalCustom: transparent;
+  }
+}

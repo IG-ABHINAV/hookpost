@@ -1,0 +1,101 @@
+// Uppy's uploader styles and Hookpost's overrides of them, imported by the
+// three components that render an Uppy uploader (media.component.tsx,
+// new.uploader.tsx, new-launch/editor.tsx) instead of by global.scss.
+//
+// global.scss is the stylesheet of every signed-in page, and Next inlines it
+// into the HTML twice (a <style> tag and the RSC payload: inlineCss in
+// next.config.js). Uppy's CSS was ~80KB of that on every page, /auth
+// included, where nothing uploads. The overrides travel with the base styles
+// so they still come after them in the cascade.
+@use '@uppy/core/dist/style.css' as uppyCore;
+@use '@uppy/dashboard/dist/style.css' as uppyDashboard;
+
+// The app's Tailwind config, for the @apply rules below (global.scss explains
+// why every entry names its config).
+@config '../../../tailwind.config.cjs';
+
+.uppy-FileInput-container {
+  @apply cursor-pointer font-[500] flex justify-center items-center gap-[4px] text-[12px] rounded-[4px] w-[107px] h-[25px] text-textColor border-[2px];
+  @apply bg-customColor3 border-customColor21;
+}
+
+.uppy-ProgressBar {
+  width: 150px;
+  position: relative;
+}
+
+.uppy-ProgressBar-inner {
+  @apply bg-customColor51;
+  height: 25px;
+  border-radius: 4px;
+}
+
+.uppy-ProgressBar-percentage {
+  position: absolute;
+  color: red;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.uppy-ProgressBar-inner[style='width: 0%;'],
+.uppy-ProgressBar-inner[style='width: 0%;'] + div {
+  opacity: 0;
+}
+.uppy-ProgressBar-inner[style='width: 100%;'],
+.uppy-ProgressBar-inner[style='width: 100%;'] + div {
+  @apply animate-normalFadeOut;
+}
+
+.uppy-Dashboard-AddFiles {
+  display: none !important;
+}
+
+.uppy-Dashboard-inner * {
+  @apply text-textColor;
+}
+
+.uppy-Dashboard-inner,
+.uppy-StatusBar {
+  background: transparent;
+  border-radius: 0 !important;
+  border: 0 !important;
+}
+
+.bigWrap .uppy-StatusBar-statusSecondary {
+  display: none !important;
+  opacity: 0 !important;
+}
+.bigWrap .uppy-StatusBar {
+  height: 32px !important;
+}
+.uppy-StatusBar {
+  //@apply bg-customColor55;
+}
+//
+//.uppy-Dashboard-inner {
+//  height: 70px !important;
+//}
+.uppy-Dashboard-files {
+  display: none;
+}
+//
+.uppy-DashboardContent-bar {
+  display: none !important;
+}
+
+.uppy-StatusBar-progress {
+  display: block;
+}
+
+.uppy-StatusBar-content {
+}
+//
+//.uppy-StatusBar-content {
+//  padding: 0 !important;
+//}
+//
+
+.uppyChange .uppy-Dashboard-inner {
+  width: 100% !important;
+}

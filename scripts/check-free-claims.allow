@@ -1,0 +1,42 @@
+# Sentences check-free-claims.mjs may let through in a trial-mode build: each
+# line is a case-insensitive regular expression, matched against one sentence.
+# Every entry needs a reason. Add one only when the sentence does not offer a
+# new Hookpost user a free plan or a free start.
+
+# Comparison criteria, not offers: "compared on free plans, rupee prices and
+# UPI", "Cheapest plan, free plan, API and MCP for 12 schedulers", "Pricing,
+# free plan, API and AI-agent support from each vendor's own page".
+compared on free plans|free plans, rupee prices|cheapest plan, free plan, api|pricing, free plan, api|whether there is a free plan|has the best free plan\?
+
+# The legal and help pages describe what happens to workspaces that already
+# had the Free plan before the trial cutoff (grandfathered, trial.policy.ts).
+original free tier
+
+# /social-media-mcp-servers: Buffer's free plan, set against Hookpost needing
+# Standard.
+buffer includes it on its free plan; hookpost requires standard
+
+# Planoly's cell in the "Free Tier" row of /alternatives/planoly.
+free plan on the mobile app only
+
+# /planable-vs-buffer-vs-hootsuite (28 Oct 2026). Both sentences name the
+# vendor and open by saying that vendor has NO free plan; the "no card" they
+# describe is Planable's and Hootsuite's own trial, read off their pricing
+# pages. The OFFER patterns are vendor-blind on purpose, so an entry here is
+# the only way to state a competitor's trial terms accurately.
+planable has no free plan; its free trial is 50 created posts
+hootsuite has no free plan, and its 14-day trial needs no credit card
+
+# The free-posts offer itself (28 Oct 2026, the owner's call): new workspaces
+# get FREE_POST_LIMIT posts with no card, then pay. "3 free posts, no card
+# needed" is true for them, so it is the one "no card" claim a trial-mode build
+# may make. The pattern wants "N free posts" and, within a few words in the same
+# sentence ("first", "for a new workspace"), "no card", and refuses a sentence
+# that also promises something forever, with no time limit, or a free plan or
+# tier ("no free plan" and another vendor's "Buffer's free plan", which
+# comparison tables put in the same sentence, are fine; "Hookpost's free plan"
+# is not), so a forever-free claim still fails. The number is not checked here:
+# trial-offer.spec.ts holds every page's copy to FREE_POST_LIMIT.
+^(?!.*\b(forever|never expires?|does not expire|no time limit|as long as you like|(?<!\bno |(?<!Hookpost)['’]s )free[- ](plan|tier))\b).*\b\d+ free posts\b[^.]{0,40}?\b(with )?no card( needed)?\b
+# /social-media-mcp-servers: names Buffer's free plan against Hookpost's paid plan (8 Nov 2026).
+^Which plan includes MCP differs by vendor: Buffer includes it on its free plan; Hookpost requires its paid plan\.$

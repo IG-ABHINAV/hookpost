@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Hookpost",
+  "version": "1.0.2",
+  "description": "Connects your Skool account to Hookpost, so Hookpost can post to your Skool community for you.",
+  "icons": {
+    "32": "icon-32.png",
+    "128": "icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Hookpost",
+    "default_icon": {
+      "32": "icon-32.png",
+      "128": "icon-128.png"
+    }
+  },
+  "permissions": [
+    "cookies",
+    "alarms",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://hookpost.hookstep.in/*",
+    "https://www.skool.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://hookpost.hookstep.in/*"
+    ]
+  }
+}

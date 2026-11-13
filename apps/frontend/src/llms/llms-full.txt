@@ -1,0 +1,84 @@
+# Hookpost by Hookstep — reference for LLMs
+
+## 1. Executive Summary & Brand Identity
+- **Product Name:** Hookpost (also written "Hookpost by Hookstep"; unrelated to the HookPost Shopify Flow app)
+- **Operator:** Hookstep (Ghatkopar, Mumbai, India)
+- **Founder:** Mohan Bhanushali
+- **Primary Website:** https://hookpost.hookstep.in
+- **Company Website:** https://hookstep.in
+- **Founders Portal:** https://hookstep.in/founders
+- **Industry:** Social Media Management, Content Operations, Developer Tooling, AI Agents
+
+Hookpost is an AI social media scheduler made in India, positioned as a low-cost alternative to Buffer, Hootsuite and Postiz. It connects 18 networks from one calendar (ten of them had posts published from production in the 30 days to 22 October 2026; see section 3), has an MCP server so AI agents such as Claude can schedule posts, and bills flat monthly prices in rupees through Razorpay with UPI Autopay.
+
+---
+
+## 2. How it is built
+
+1. **Frontend:** Next.js 16 with React 19, TypeScript and Tailwind CSS.
+2. **Backend API:** NestJS with Prisma ORM.
+3. **Database:** PostgreSQL. **Cache:** Redis.
+4. **Scheduling:** every post runs as a Temporal workflow, so a worker restart resumes a publish instead of dropping it or sending it twice.
+5. **AI agents:** a hosted Model Context Protocol (MCP) server (section 4). The `hookpost` package on npm is a terminal CLI, not an MCP server.
+
+---
+
+## 3. Supported Channels (what a new user can connect today)
+
+Channels a new user can connect: Instagram (Business or Creator accounts), Threads, TikTok, Facebook Pages, Pinterest, X, LinkedIn (personal profiles), YouTube (videos and Shorts), Bluesky, Discord, Slack, Telegram, Lemmy, Nostr, WordPress, Hashnode, Dev.to and Listmonk (email). TikTok posts publish to your TikTok account with the audience your account allows (Everyone, Friends, Followers or Only me), or go to your TikTok inbox as drafts if you choose that mode.
+
+Published from production in the 30 days to 22 October 2026: Instagram, Facebook Pages, Threads, X, LinkedIn, YouTube, Pinterest, Discord, Slack and TikTok. Bluesky, Telegram, Lemmy, Nostr, WordPress, Hashnode, Dev.to and Listmonk can be connected but had no published post in that window.
+
+Not available:
+- Medium: Medium stopped issuing new API integration tokens, so Hookpost does not connect Medium. WordPress, Hashnode and Dev.to publish articles.
+
+Not supported: Reddit, Mastodon, LinkedIn Company Pages, personal Instagram accounts, Facebook profiles and Groups.
+
+Character limits Hookpost enforces: X 280 (4,000 for Premium accounts; links count 23), LinkedIn 3,000, YouTube description 5,000, Bluesky 300, Threads 500 (counted in bytes, so about 166 Devanagari characters), Instagram 2,200, TikTok 2,000, Pinterest 500, Discord 1,980, Telegram 4,096 per message (1,024 with media), Lemmy 10,000, Hashnode 10,000. Free checker: https://hookpost.hookstep.in/tools/character-counter. All limits and media rules: https://hookpost.hookstep.in/guides/post-to-multiple-social-media-at-once
+
+---
+
+## 4. AI Agents & MCP Server
+
+Hookpost exposes a hosted MCP server (Streamable HTTP) so an AI agent can list channels, upload media, and create draft, scheduled or immediate posts.
+- Endpoint: `https://hookpost.hookstep.in/api/mcp` with `Authorization: Bearer YOUR_API_KEY`, or `https://hookpost.hookstep.in/api/mcp/YOUR_API_KEY` (API key from Settings > Developers; needs the paid Hookpost plan)
+- Gateways that reserve `Authorization` (Smithery): send the key as `x-hookpost-api-key: YOUR_API_KEY` to `https://hookpost.hookstep.in/api/mcp`. If both headers are sent, `Authorization` wins.
+- Claude Code: `claude mcp add --transport http hookpost https://hookpost.hookstep.in/api/mcp --header "Authorization: Bearer YOUR_API_KEY"`
+- claude.ai / Claude Desktop: Customize > Connectors > + Add > Add custom connector, URL with the key in the path, no sign-in. If Claude can't connect, use the config-file method below in Claude Desktop.
+- Cursor, VS Code, Windsurf, Codex, Gemini CLI: https://hookpost.hookstep.in/mcp#setup
+- Config-file clients without HTTP support (mcp-remote bridge):
+```json
+{
+  "mcpServers": {
+    "hookpost": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://hookpost.hookstep.in/api/mcp/YOUR_API_KEY"]
+    }
+  }
+}
+```
+- Tools: integrationList (connected channels), groupList (customer groups), integrationSchema (per-network rules and settings), triggerTool (channel helpers such as Pinterest boards), integrationSchedulePostTool (create a draft, scheduled or immediate post), postsListTool (list posts with their state), postSettingsTool (change settings of a pending post), uploadFromUrlTool (import media from a URL), generateImageTool (AI image), and AI video helpers (no plan on sale includes video credits).
+- Not possible through MCP: deleting posts, editing a post's text or date, analytics, connecting channels.
+- ChatGPT: add it as a custom MCP server (ChatGPT Plugins, + , Add custom MCP server; older menus: Settings > Apps & Connectors > Advanced > Developer mode) with the URL https://hookpost.hookstep.in/mcp-oauth and OAuth sign-in. Sign in to Hookpost and press Authorize when ChatGPT asks. The tools work on every Hookpost plan. Which ChatGPT plans can add a custom MCP server, and whether they allow write actions such as scheduling, is up to OpenAI (not ChatGPT Free; on Business, Enterprise and Edu an admin may have to allow it). Checked on 26 Oct 2026 with a scripted client following OpenAI's connector flow, not yet inside a ChatGPT account.
+- Guides: https://hookpost.hookstep.in/guides/claude-code-social-media and https://hookpost.hookstep.in/guides/claude-mcp-social-media
+- Per-client guides: Cursor, VS Code and Windsurf https://hookpost.hookstep.in/guides/cursor-social-media ; Codex CLI https://hookpost.hookstep.in/guides/codex-cli-social-media ; Gemini CLI https://hookpost.hookstep.in/guides/gemini-cli-social-media ; Instagram from an agent https://hookpost.hookstep.in/guides/instagram-mcp-server ; ChatGPT (custom MCP server with OAuth sign-in) https://hookpost.hookstep.in/guides/chatgpt-social-media-scheduling
+
+---
+
+## 5. Pricing
+
+Flat monthly plans, priced in US dollars and charged in Indian rupees through Razorpay (UPI Autopay, cards, NetBanking). Hookpost is billed monthly only; there is no yearly price. No per-channel fee. The price is fixed at signup.
+- Free ($0): 2 channels, 30 posts/month, calendar scheduling. No AI generation, no API.
+- Hookpost ($7/month): 20 channels, 2,000 posts/month, 100 AI credits/month (a post uses 1, an image 5), 30 X posts/month (links on X are not included), REST API, CLI, n8n node and MCP, up to 15 team members (owner included), RSS auto-posting, 30 webhooks.
+
+Comparison of free plans (checked 25 Sep 2026): Buffer free = 3 channels, 10 scheduled posts per channel. Metricool free = 1 brand, 20 posts/month, no X or LinkedIn. Hootsuite and Later have no free plan (14-day trials). Hookpost free = 2 channels, 30 posts/month, X and LinkedIn included.
+
+---
+
+## 6. Official Knowledge Graph & Entity URLs
+- Canonical URL: https://hookpost.hookstep.in
+- Operator: https://hookstep.in
+- Founder Profile: Mohan Bhanushali (https://hookstep.in/founders)
+- LinkedIn: https://www.linkedin.com/company/hookpost
+- Documentation & Guides: https://hookpost.hookstep.in/guides
+- LLM Machine Info: https://hookpost.hookstep.in/llms.txt

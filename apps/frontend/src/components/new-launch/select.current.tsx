@@ -1,0 +1,245 @@
+'use client';
+
+import { FC, RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  SelectedIntegrations,
+  useLaunchStore,
+} from '@hookpost/frontend/components/new-launch/store';
+import clsx from 'clsx';
+import SafeImage from '@hookpost/react/helpers/safe.image';
+import { useShallow } from 'zustand/react/shallow';
+import { GlobalIcon } from '@hookpost/frontend/components/ui/icons';
+import { useT } from '@hookpost/react/translation/get.transation.service.client';
+import { Integrations } from '@hookpost/frontend/components/launches/calendar.context';
+import {
+  useDecisionModal,
+  useModals,
+} from '@hookpost/frontend/components/layout/new-modal';
+
+export function useHasScroll(ref: RefObject<HTMLElement | null>): boolean {
+  const [hasHorizontalScroll, setHasHorizontalScroll] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const checkScroll = () => {
+      const el = ref.current;
+      if (el) {
+        setHasHorizontalScroll(el.scrollWidth > el.clientWidth);
+      }
+    };
+
+    checkScroll(); // initial check
+
+    const resizeObserver = new ResizeObserver(checkScroll);
+    resizeObserver.observe(ref.current);
+
+    const mutationObserver = new MutationObserver(checkScroll);
+    mutationObserver.observe(ref.current, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    return () => {
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, [ref]);
+
+  return hasHorizontalScroll;
+}
+
+export const SelectCurrent: FC = () => {
+  const t = useT();
+  const modals = useDecisionModal();
+  const {
+    selectedIntegrations,
+    settingsInvalid,
+    current,
+    setCurrent,
+    locked,
+    setHide,
+    addOrRemoveSelectedIntegration,
+  } = useLaunchStore(
+    useShallow((state) => ({
+      selectedIntegrations: state.selectedIntegrations,
+      settingsInvalid: state.settingsInvalid,
+      addOrRemoveSelectedIntegration: state.addOrRemoveSelectedIntegration,
+      current: state.current,
+      setCurrent: state.setCurrent,
+      locked: state.locked,
+      setHide: state.setHide,
+    }))
+  );
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const hasScroll = useHasScroll(contentRef);
+
+  // Nothing in the composer says a per-channel caption is possible: you only
+  // find out by clicking a channel tab. Hint at it while the globe is active
+  // and there is at least one channel to customise.
+  const showPerChannelHint =
+    current === 'global' && selectedIntegrations.length > 0;
+
+  const removeSocial = useCallback(
+    (sIntegration: Integrations) => async (e: any) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const open = await modals.open({
+        title: 'Remove Social Account',
+        description:
+          'Are you sure you want to remove this social from scheduling?',
+      });
+
+      if (!open) {
+        return;
+      }
+
+      addOrRemoveSelectedIntegration(sIntegration, {});
+    },
+    []
+  );
+
+  return (
+    <>
+      <div className="select-none left-0 absolute w-full z-[100] px-[20px]">
+        <div
+          ref={contentRef}
+          className={clsx(
+            'flex gap-[6px] w-full overflow-x-auto scrollbar scrollbar-thumb-tableBorder scrollbar-track-secondary',
+            locked && 'opacity-50 pointer-events-none'
+          )}
+        >
+          <div
+            onClick={() => {
+              setHide(true);
+              setCurrent('global');
+            }}
+            className={clsx(
+              'cursor-pointer flex gap-[8px] rounded-[8px] w-[40px] h-[40px] justify-center items-center bg-newBgLineColor',
+              current !== 'global'
+                ? 'text-[#A3A3A3]'
+                : 'border border-hp-primary text-hp-primary-text'
+            )}
+          >
+            <div>
+              <GlobalIcon />
+            </div>
+          </div>
+          {selectedIntegrations.map(({ integration }) => (
+            <div
+              onClick={() => {
+                setHide(true);
+                setCurrent(integration.id);
+              }}
+              key={integration.id}
+              className={clsx(
+                'border cursor-pointer relative flex gap-[8px] w-[40px] h-[40px] rounded-[8px] items-center bg-newBgLineColor justify-center',
+                current === integration.id
+                  ? 'border-hp-primary text-hp-primary-text'
+                  : 'border-transparent'
+              )}
+            >
+              <div
+                onClick={removeSocial(integration)}
+                className="absolute justify-center items-center flex w-[8px] h-[8px] -top-[1px] -start-[3px] bg-red-500 rounded-full text-white text-[8px]"
+              >
+                X
+              </div>
+              <IsGlobal id={integration.id} />
+              {settingsInvalid[integration.id] && (
+                <div
+                  {...{
+                    'data-tooltip-id': 'tooltip',
+                    'data-tooltip-content': t(
+                      'channel_settings_incomplete',
+                      'This channel still needs a setting filled in'
+                    ),
+                  }}
+                  className="absolute justify-center items-center flex w-[14px] h-[14px] -top-[4px] -end-[4px] bg-[#FEC84B] text-black rounded-full text-[10px] font-bold leading-none z-20"
+                >
+                  !
+                </div>
+              )}
+              <div
+                {...{
+                  'data-tooltip-id': 'tooltip',
+                  'data-tooltip-content': integration.name,
+                }}
+                className={clsx(
+                  'relative w-full h-full rounded-full flex justify-center items-center filter transition-all duration-500'
+                )}
+              >
+                <SafeImage
+                  src={integration.picture || '/no-picture.jpg'}
+                  className="rounded-full min-w-[26px]"
+                  alt={integration.identifier}
+                  width={26}
+                  height={26}
+                  onError={(e) => {
+                    e.currentTarget.src = '/no-picture.jpg';
+                    e.currentTarget.srcset = '/no-picture.jpg';
+                  }}
+                />
+                {integration.identifier === 'youtube' ? (
+                  <img
+                    src="/icons/platforms/youtube.svg"
+                    className="absolute z-10 bottom-[2px] end-[2px] min-w-[12px]"
+                    width={12}
+                  />
+                ) : (
+                  <SafeImage
+                    src={`/icons/platforms/${integration.identifier}.png`}
+                    className="min-w-[12px] min-h-[12px] rounded-[3px] absolute z-10 bottom-[6px] end-[6px]"
+                    alt={integration.identifier}
+                    width={12}
+                    height={12}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        {showPerChannelHint && (
+          <div className="mt-[6px] text-[11px] leading-[14px] text-[#6B6B6B] dark:text-[#A3A3A3]">
+            {t(
+              'per_channel_caption_hint',
+              'Writing for every channel at once. Click a channel above to give it its own caption.'
+            )}
+          </div>
+        )}
+      </div>
+      <div
+        className={clsx(
+          hasScroll ? 'h-[55px]' : 'h-[40px]',
+          showPerChannelHint && 'mb-[20px]'
+        )}
+      />
+    </>
+  );
+};
+
+export const IsGlobal: FC<{ id: string }> = ({ id }) => {
+  const t = useT();
+  const { isInternal } = useLaunchStore(
+    useShallow((state) => ({
+      isInternal: !!state.internal.find((p) => p.integration.id === id),
+    }))
+  );
+
+  if (!isInternal) {
+    return null;
+  }
+
+  return (
+    <div
+      data-tooltip-id="tooltip"
+      data-tooltip-content={t(
+        'no_longer_global_mode',
+        'No longer in global mode'
+      )}
+      className="w-[8px] h-[8px] bg-hp-primary -top-[1px] -end-[3px] absolute rounded-full"
+    />
+  );
+};

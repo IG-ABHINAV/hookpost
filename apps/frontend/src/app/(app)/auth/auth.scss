@@ -1,0 +1,67 @@
+// The sign-up and sign-in pages' stylesheet (see tailwind.auth.config.cjs for
+// why /auth no longer loads the app's global.scss). The colour variables, the
+// Tailwind classes these pages use, and the few global rules from global.scss
+// that apply here; nothing else from the app.
+@use '../../colors.scss';
+@use '../../mobile.scss';
+
+@config '../../../../tailwind.auth.config.cjs';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+body {
+  background: var(--new-bgColor) !important;
+  color: var(--new-btn-text);
+}
+
+body * {
+  outline: none !important;
+}
+
+#tooltip {
+  z-index: 10000;
+}
+
+.loading-shimmer {
+  position: relative;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.loading-shimmer:before {
+  content: attr(data-text);
+  position: absolute;
+  overflow: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+  color: white;
+  animation: loading 4s linear 0s infinite;
+  filter: blur(0.4px);
+}
+@keyframes loading {
+  0% {
+    max-width: 0;
+  }
+}
+
+html[dir='rtl'] [dir='ltr'] {
+  direction: rtl !important;
+}
+
+// The composer in the auth page's right panel (components/auth/auth.showcase.tsx)
+// drifts a few pixels; nothing moves for anyone who asks for less motion.
+@keyframes auth-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.auth-float {
+  animation: auth-float 7s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-float { animation: none; }
+}

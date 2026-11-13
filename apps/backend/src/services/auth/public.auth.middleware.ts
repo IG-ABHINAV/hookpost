@@ -1,0 +1,88 @@
+import { HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
+import { OrganizationService } from '@hookpost/nestjs-libraries/database/prisma/organizations/organization.service';
+import { OAuthService } from '@hookpost/nestjs-libraries/database/prisma/oauth/oauth.service';
+import { HttpForbiddenException } from '@hookpost/nestjs-libraries/services/exception.filter';
+import { setSentryUserContext } from '@hookpost/nestjs-libraries/sentry/initialize.sentry';
+import {
+  planLapsed,
+  PolicySubscription,
+} from '@hookpost/nestjs-libraries/database/prisma/subscriptions/trial.policy';
+
+/**
+ * A plan row that has not been deleted and whose end date has not passed
+ * (trial.policy.ts planLapsed): a cancelled plan is over at cancelAt, not
+ * when the hourly sweep deletes its row. A soft-deleted subscription row
+ * stays attached to the workspace, and used to count as a plan here
+ * (re-review of f77349f66).
+ */
+const hasLivePlan = (org: { subscription?: PolicySubscription | null }) =>
+  !!org.subscription &&
+  !org.subscription.deletedAt &&
+  !planLapsed(org.subscription);
+
+@Injectable()
+export class PublicAuthMiddleware implements NestMiddleware {
+  constructor(
+    private _organizationService: OrganizationService,
+    private _oauthService: OAuthService
+  ) {}
+  async use(req: Request, res: Response, next: NextFunction) {
+    const auth = (req.headers.authorization ||
+      req.headers.Authorization) as string;
+    if (!auth) {
+      res.status(HttpStatus.UNAUTHORIZED).json({ msg: 'No API Key found' });
+      return;
+    }
+    try {
+      if (auth.startsWith('pos_')) {
+        const authorization = await this._oauthService.getOrgByOAuthToken(auth);
+        if (!authorization) {
+          res
+            .status(HttpStatus.UNAUTHORIZED)
+            .json({ msg: 'Invalid OAuth token' });
+          return;
+        }
+
+        const org = authorization.organization;
+        if (!!process.env.RAZORPAY_KEY_SECRET && !hasLivePlan(org)) {
+          res
+            .status(HttpStatus.UNAUTHORIZED)
+            .json({ msg: 'No subscription found' });
+          return;
+        }
+
+        // @ts-ignore
+        req.org = { ...org, users: [{ users: { role: 'SUPERADMIN' } }] };
+      } else {
+        const org = await this._organizationService.getOrgByApiKey(auth);
+        if (!org) {
+          res
+            .status(HttpStatus.UNAUTHORIZED)
+            .json({ msg: 'Invalid API key' });
+          return;
+        }
+
+        if (!!process.env.RAZORPAY_KEY_SECRET && !hasLivePlan(org)) {
+          res
+            .status(HttpStatus.UNAUTHORIZED)
+            .json({ msg: 'No subscription found' });
+          return;
+        }
+
+        // @ts-ignore
+        req.org = { ...org, users: [{ users: { role: 'SUPERADMIN' } }] };
+      }
+    } catch (err) {
+      throw new HttpForbiddenException();
+    }
+
+    setSentryUserContext({
+      // @ts-ignore
+      orgId: req.org.id,
+      // @ts-ignore
+      paymentId: req.org.paymentId,
+    });
+    next();
+  }
+}

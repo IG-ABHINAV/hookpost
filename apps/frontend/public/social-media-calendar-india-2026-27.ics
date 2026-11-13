@@ -1,0 +1,681 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Hookstep//Hookpost India social media calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Social media calendar India 2026-27 (Hookpost)
+X-WR-TIMEZONE:Asia/Kolkata
+BEGIN:VEVENT
+UID:2026-10-02-gandhi-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261003
+SUMMARY:Gandhi Jayanti
+DESCRIPTION:Gazetted holiday. Post idea: A quote or value from Gandhi tied 
+ to how your business works. Avoid discount-led posts on this day.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-10-18-durga-puja-maha-saptami-ashtami-19-oct-navami-20-oct@hookpos
+ t.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261019
+SUMMARY:Durga Puja: Maha Saptami (Ashtami 19 Oct\, Navami 20 Oct)
+DESCRIPTION:Restricted holiday. Post idea: Bengal and the east. A short ser
+ ies across Saptami\, Ashtami and Navami\; Navratri runs in the north at th
+ e same time.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-10-20-dussehra-vijaya-dashami@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:Dussehra (Vijaya Dashami)
+DESCRIPTION:Gazetted holiday. Post idea: Good-over-evil framing: a problem 
+ your product fixes. Navratri runs for the nine nights before it\, so a 9-p
+ ost series works.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-10-26-maharishi-valmiki-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261027
+SUMMARY:Maharishi Valmiki Jayanti
+DESCRIPTION:Restricted holiday. Post idea: Regional audiences in North Indi
+ a. A short greeting is enough.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-10-29-karwa-chauth@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261030
+SUMMARY:Karwa Chauth
+DESCRIPTION:Restricted holiday. Post idea: Gifting\, fashion\, beauty and f
+ ood brands. Schedule the post for the morning\; the fast ends at moonrise.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-11-08-diwali@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261108
+DTEND;VALUE=DATE:20261109
+SUMMARY:Diwali
+DESCRIPTION:Gazetted holiday. Post idea: Your biggest greeting of the year.
+  Schedule the sale teaser 7-10 days out and the greeting for the morning o
+ f the day.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-11-09-govardhan-puja@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+SUMMARY:Govardhan Puja
+DESCRIPTION:Restricted holiday. Post idea: Follow-up greeting\; also a natu
+ ral day to thank customers after Diwali.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-11-11-bhai-dooj@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:Bhai Dooj
+DESCRIPTION:Restricted holiday. Post idea: Sibling-gifting angle for retail
+  and D2C brands.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-11-14-children-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
+SUMMARY:Children's Day
+DESCRIPTION:Fixed-date observance. Post idea: Education\, toys\, kids’ fo
+ od and family brands. Throwback photos from your team work well.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-11-15-chhath-puja@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:Chhath Puja
+DESCRIPTION:Restricted holiday. Post idea: Important in Bihar\, Jharkhand a
+ nd eastern UP. Localise if you have audiences there.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-11-24-guru-nanak-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261124
+DTEND;VALUE=DATE:20261125
+SUMMARY:Guru Nanak Jayanti
+DESCRIPTION:Gazetted holiday. Post idea: A respectful greeting. Keep produc
+ t promotion out of it.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-12-24-christmas-eve@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+SUMMARY:Christmas Eve
+DESCRIPTION:Restricted holiday. Post idea: Gift-guide and last-order-date p
+ osts for delivery businesses.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-12-25-christmas@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261225
+DTEND;VALUE=DATE:20261226
+SUMMARY:Christmas
+DESCRIPTION:Gazetted holiday. Post idea: Greeting plus a year-end offer if 
+ you run one.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2026-12-31-new-year-s-eve@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+SUMMARY:New Year's Eve
+DESCRIPTION:Fixed-date observance. Post idea: Year-in-review carousel: numb
+ ers\, launches\, thank-yous.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-01-01-new-year-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:New Year's Day
+DESCRIPTION:Restricted holiday. Post idea: Plans or resolutions for your cu
+ stomers\, not for you.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-01-12-national-youth-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270112
+DTEND;VALUE=DATE:20270113
+SUMMARY:National Youth Day
+DESCRIPTION:Fixed-date observance. Post idea: Swami Vivekananda’s birth a
+ nniversary. Students\, education and career audiences.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-01-14-makar-sankranti-magh-bihu@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+SUMMARY:Makar Sankranti / Magh Bihu
+DESCRIPTION:Restricted holiday. Post idea: Kites and harvest imagery\; the 
+ festival has different names by state\, so localise the greeting.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-01-15-pongal-guru-gobind-singh-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:Pongal / Guru Gobind Singh Jayanti
+DESCRIPTION:Restricted holiday. Post idea: Tamil audiences for Pongal\; Sik
+ h audiences for Guru Gobind Singh Jayanti. Two separate\, respectful greet
+ ings.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-01-26-republic-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270126
+DTEND;VALUE=DATE:20270127
+SUMMARY:Republic Day
+DESCRIPTION:Gazetted holiday. Post idea: Made-in-India and constitution the
+ mes. Many brands run sales\; decide early if you will.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-02-11-basant-panchami@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270211
+DTEND;VALUE=DATE:20270212
+SUMMARY:Basant Panchami
+DESCRIPTION:Restricted holiday. Post idea: Yellow palette\, learning and ne
+ w beginnings. Suits education brands.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-02-14-valentine-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270215
+SUMMARY:Valentine's Day
+DESCRIPTION:Fixed-date observance. Post idea: Gifting\, food and experience
+ s. Schedule the week-long run-up from 7 February.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-02-19-chhatrapati-shivaji-maharaj-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270219
+DTEND;VALUE=DATE:20270220
+SUMMARY:Chhatrapati Shivaji Maharaj Jayanti
+DESCRIPTION:Restricted holiday. Post idea: Big in Maharashtra. A respectful
+  greeting in Marathi lands better than an English one.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-06-maha-shivratri@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270306
+DTEND;VALUE=DATE:20270307
+SUMMARY:Maha Shivratri
+DESCRIPTION:Restricted holiday. Post idea: A respectful greeting. Keep prom
+ otion light.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-08-international-women-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270308
+DTEND;VALUE=DATE:20270309
+SUMMARY:International Women's Day
+DESCRIPTION:Fixed-date observance. Post idea: Spotlight the women on your t
+ eam or among your customers\, with their permission.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-10-id-ul-fitr-subject-to-moon-sighting@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270310
+DTEND;VALUE=DATE:20270311
+SUMMARY:Id-ul-Fitr (subject to moon sighting)
+DESCRIPTION:Gazetted holiday. Post idea: Greeting on the day. The date can 
+ move by a day\, so keep a draft ready for both.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-22-holika-dahan@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270323
+SUMMARY:Holika Dahan
+DESCRIPTION:Restricted holiday. Post idea: Teaser for Holi content the next
+  day.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-23-holi@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270323
+DTEND;VALUE=DATE:20270324
+SUMMARY:Holi
+DESCRIPTION:Gazetted holiday. Post idea: Colour-heavy creatives and short v
+ ideo. One of the most shared festival days of the year.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-26-good-friday@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270326
+DTEND;VALUE=DATE:20270327
+SUMMARY:Good Friday
+DESCRIPTION:Gazetted holiday. Post idea: A quiet day for Christian audience
+ s. Skip promotions.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-28-easter-sunday@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270328
+DTEND;VALUE=DATE:20270329
+SUMMARY:Easter Sunday
+DESCRIPTION:Restricted holiday. Post idea: Greeting for Christian audiences
+ \; spring and family imagery for food and gifting brands.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-07-gudi-padwa-ugadi-cheti-chand-navratri-begins@hookpost.hookst
+ ep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270407
+DTEND;VALUE=DATE:20270408
+SUMMARY:Gudi Padwa / Ugadi / Cheti Chand / Navratri begins
+DESCRIPTION:Restricted holiday. Post idea: Regional new year in Maharashtra
+ \, Karnataka\, Andhra Pradesh\, Telangana and for Sindhi audiences. Locali
+ se the greeting by state.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-14-vaisakhi-vishu-tamil-new-year@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270414
+DTEND;VALUE=DATE:20270415
+SUMMARY:Vaisakhi / Vishu / Tamil New Year
+DESCRIPTION:Restricted holiday. Post idea: Harvest and new-year greetings f
+ or Punjab\, Kerala and Tamil Nadu. Three short regional versions beat one 
+ generic post.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-15-ram-navami@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270415
+DTEND;VALUE=DATE:20270416
+SUMMARY:Ram Navami
+DESCRIPTION:Gazetted holiday. Post idea: A respectful greeting. Keep produc
+ t promotion out of it.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-15-bahag-bihu-vaisakhadi-bengali-new-year@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270415
+DTEND;VALUE=DATE:20270416
+SUMMARY:Bahag Bihu / Vaisakhadi (Bengali New Year)
+DESCRIPTION:Restricted holiday. Post idea: Assamese and Bengali new year on
+  the same day. Worth a regional post if you have audiences in the east.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-19-mahavir-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270419
+DTEND;VALUE=DATE:20270420
+SUMMARY:Mahavir Jayanti
+DESCRIPTION:Gazetted holiday. Post idea: A short greeting\; ahimsa and simp
+ licity themes fit.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-05-09-mother-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270509
+DTEND;VALUE=DATE:20270510
+SUMMARY:Mother's Day
+DESCRIPTION:Observance. Post idea: Second Sunday of May. Gifting\, food and
+  family brands\; schedule the gift-guide post a week ahead.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-05-09-rabindranath-tagore-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270509
+DTEND;VALUE=DATE:20270510
+SUMMARY:Rabindranath Tagore Jayanti
+DESCRIPTION:Restricted holiday. Post idea: Important for Bengali audiences.
+  A line from Tagore with your brand voice kept quiet.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-05-17-id-ul-zuha-bakrid-subject-to-moon-sighting@hookpost.hookstep
+ .in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270517
+DTEND;VALUE=DATE:20270518
+SUMMARY:Id-ul-Zuha (Bakrid\, subject to moon sighting)
+DESCRIPTION:Gazetted holiday. Post idea: Greeting on the day. The date can 
+ move by a day\, so keep a draft ready for both.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-05-20-buddha-purnima@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270520
+DTEND;VALUE=DATE:20270521
+SUMMARY:Buddha Purnima
+DESCRIPTION:Gazetted holiday. Post idea: A calm\, respectful greeting.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-06-16-muharram-subject-to-moon-sighting@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270616
+DTEND;VALUE=DATE:20270617
+SUMMARY:Muharram (subject to moon sighting)
+DESCRIPTION:Gazetted holiday. Post idea: A day of mourning for many. No cel
+ ebratory or sales posts.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-06-20-father-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270620
+DTEND;VALUE=DATE:20270621
+SUMMARY:Father's Day
+DESCRIPTION:Observance. Post idea: Third Sunday of June. Gifting and family
+  content\; team members sharing a photo with their fathers works if they w
+ ant to.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-06-21-international-day-of-yoga@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270621
+DTEND;VALUE=DATE:20270622
+SUMMARY:International Day of Yoga
+DESCRIPTION:Fixed-date observance. Post idea: Wellness\, fitness and food b
+ rands. A short morning video does better than a poster.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-07-05-rath-yatra@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270705
+DTEND;VALUE=DATE:20270706
+SUMMARY:Rath Yatra
+DESCRIPTION:Restricted holiday. Post idea: Important in Odisha. A greeting 
+ with festival imagery for audiences there.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-08-15-independence-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270815
+DTEND;VALUE=DATE:20270816
+SUMMARY:Independence Day
+DESCRIPTION:Gazetted holiday. Post idea: Made-in-India stories\, your team\
+ , your customers. Many brands run a sale\; announce it a few days before.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-08-15-milad-un-nabi-subject-to-moon-sighting@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270815
+DTEND;VALUE=DATE:20270816
+SUMMARY:Milad-un-Nabi (subject to moon sighting)
+DESCRIPTION:Gazetted holiday. Post idea: Falls on Independence Day in 2027.
+  A separate\, respectful greeting if your audience observes it.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-08-15-parsi-new-year-navroz@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270815
+DTEND;VALUE=DATE:20270816
+SUMMARY:Parsi New Year (Navroz)
+DESCRIPTION:Restricted holiday. Post idea: Also on 15 August in 2027. A gre
+ eting for Parsi audiences\, mostly in Mumbai and Gujarat.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-08-17-raksha-bandhan@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270817
+DTEND;VALUE=DATE:20270818
+SUMMARY:Raksha Bandhan
+DESCRIPTION:Restricted holiday. Post idea: Sibling gifting for retail\, swe
+ ets and D2C brands. Start teasers 7-10 days ahead.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-08-25-janmashtami@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270825
+DTEND;VALUE=DATE:20270826
+SUMMARY:Janmashtami
+DESCRIPTION:Gazetted holiday. Post idea: Festival imagery and short video. 
+ Dahi handi content works for Maharashtra audiences.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-09-04-ganesh-chaturthi@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270904
+DTEND;VALUE=DATE:20270905
+SUMMARY:Ganesh Chaturthi
+DESCRIPTION:Restricted holiday. Post idea: Ten days of celebration in Mahar
+ ashtra and Karnataka. A series across the festival works better than one p
+ ost.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-09-05-teachers-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270905
+DTEND;VALUE=DATE:20270906
+SUMMARY:Teachers' Day
+DESCRIPTION:Fixed-date observance. Post idea: Education and edtech brands\;
+  thank-you posts from your team to their teachers.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-09-12-onam-thiru-onam@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20270912
+DTEND;VALUE=DATE:20270913
+SUMMARY:Onam (Thiru Onam)
+DESCRIPTION:Restricted holiday. Post idea: Kerala audiences. Sadya and pook
+ alam imagery\; greeting in Malayalam if you can.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-02-gandhi-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271002
+DTEND;VALUE=DATE:20271003
+SUMMARY:Gandhi Jayanti
+DESCRIPTION:Gazetted holiday. Post idea: A quote or value from Gandhi tied 
+ to how your business works. Avoid discount-led posts on this day.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-06-durga-puja-maha-saptami-ashtami-7-oct-navami-8-oct@hookpost.
+ hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271006
+DTEND;VALUE=DATE:20271007
+SUMMARY:Durga Puja: Maha Saptami (Ashtami 7 Oct\, Navami 8 Oct)
+DESCRIPTION:Restricted holiday. Post idea: Bengal and the east. A short ser
+ ies across Saptami\, Ashtami and Navami\; Navratri runs in the north at th
+ e same time.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-09-dussehra-vijaya-dashami@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271009
+DTEND;VALUE=DATE:20271010
+SUMMARY:Dussehra (Vijaya Dashami)
+DESCRIPTION:Gazetted holiday. Post idea: Good-over-evil framing: a problem 
+ your product fixes.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-15-maharishi-valmiki-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271015
+DTEND;VALUE=DATE:20271016
+SUMMARY:Maharishi Valmiki Jayanti
+DESCRIPTION:Restricted holiday. Post idea: Regional audiences in North Indi
+ a. A short greeting is enough.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-18-karwa-chauth@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271018
+DTEND;VALUE=DATE:20271019
+SUMMARY:Karwa Chauth
+DESCRIPTION:Restricted holiday. Post idea: Gifting\, fashion\, beauty and f
+ ood brands. Schedule the post for the morning\; the fast ends at moonrise.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-28-naraka-chaturdasi-chhoti-diwali@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271028
+DTEND;VALUE=DATE:20271029
+SUMMARY:Naraka Chaturdasi (Chhoti Diwali)
+DESCRIPTION:Restricted holiday. Post idea: Diwali eve. Some states observe 
+ the Diwali holiday on this day\, so check where your audience is.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-29-diwali@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271029
+DTEND;VALUE=DATE:20271030
+SUMMARY:Diwali
+DESCRIPTION:Gazetted holiday. Post idea: Your biggest greeting of the year.
+  Schedule the sale teaser 7-10 days out and the greeting for the morning o
+ f the day.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-30-govardhan-puja@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271030
+DTEND;VALUE=DATE:20271031
+SUMMARY:Govardhan Puja
+DESCRIPTION:Restricted holiday. Post idea: Follow-up greeting\; also a natu
+ ral day to thank customers after Diwali.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-10-31-bhai-dooj@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271031
+DTEND;VALUE=DATE:20271101
+SUMMARY:Bhai Dooj
+DESCRIPTION:Restricted holiday. Post idea: Sibling-gifting angle for retail
+  and D2C brands.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-11-04-chhath-puja@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271104
+DTEND;VALUE=DATE:20271105
+SUMMARY:Chhath Puja
+DESCRIPTION:Restricted holiday. Post idea: Important in Bihar\, Jharkhand a
+ nd eastern UP. Localise if you have audiences there.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-11-14-guru-nanak-jayanti@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271114
+DTEND;VALUE=DATE:20271115
+SUMMARY:Guru Nanak Jayanti
+DESCRIPTION:Gazetted holiday. Post idea: A respectful greeting. Keep produc
+ t promotion out of it.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-11-14-children-s-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271114
+DTEND;VALUE=DATE:20271115
+SUMMARY:Children's Day
+DESCRIPTION:Fixed-date observance. Post idea: Falls on Guru Nanak Jayanti i
+ n 2027\, so keep the two posts separate and gentle.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-11-24-guru-teg-bahadur-s-martyrdom-day@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271124
+DTEND;VALUE=DATE:20271125
+SUMMARY:Guru Teg Bahadur's Martyrdom Day
+DESCRIPTION:Restricted holiday. Post idea: A day of remembrance for Sikh au
+ diences. No promotions.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-12-24-christmas-eve@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271224
+DTEND;VALUE=DATE:20271225
+SUMMARY:Christmas Eve
+DESCRIPTION:Restricted holiday. Post idea: Gift-guide and last-order-date p
+ osts for delivery businesses.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-12-25-christmas@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271225
+DTEND;VALUE=DATE:20271226
+SUMMARY:Christmas
+DESCRIPTION:Gazetted holiday. Post idea: Greeting plus a year-end offer if 
+ you run one.
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-12-31-new-year-s-eve@hookpost.hookstep.in
+DTSTAMP:20261011T000000Z
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+SUMMARY:New Year's Eve
+DESCRIPTION:Fixed-date observance. Post idea: Year-in-review carousel: numb
+ ers\, launches\, thank-yous.
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
